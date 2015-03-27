@@ -21,3 +21,7 @@ sumPairs list1 list2
 	| list1 == [] = head list2 : sumPairs (list1) (tail list2)
     | list2 == [] = head list1 : sumPairs (tail list1) (list2)
     | otherwise = (head list1 + head list2) : sumPairs (tail list1) (tail list2)
+
+quickSort :: [Int] -> [Int]
+quickSort [] = []
+quickSort (a:as) = quickSort [x | x<- as, x<= a] ++ [a] ++ quickSort [y | y <- as, y > a]
