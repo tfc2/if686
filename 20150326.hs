@@ -1,6 +1,4 @@
-{-Trabalho 3-}
-
-{-Questao 1-}
+-- Trabalho 3 --
 
 type Table = [(Int, Int)] -- Primeiro int = chave, segundo int = valor
 
@@ -58,3 +56,32 @@ comparaConjuntos a b
  | contem a b = "B contem A"
  | intersec a b = "A interseciona B"
  | otherwise = "Conjuntos disjuntos"
+
+-- exercicios da aula --
+
+take' :: [t] -> Int -> [t]
+take' [] _ = [] -- caso a lista seja vazia
+take' _ 0 = [] -- caso base
+take' (a:as) n = a : (take' as (n-1)) -- incluindo os elementos ate n =1
+
+drop' :: [t] -> Int -> [t]
+drop' [] _ = [] -- caso a lista seja vazia
+drop' (a:as) n
+    | n == 0 = a : (drop' as n) -- caso ja tenha retirado n elementos
+    | otherwise = drop' as (n-1) -- retirando os n primeiro elementos
+
+takeWhile' :: (t->Bool) -> [t] -> [t]
+takeWhile' _ [] = [] -- caso a lista seja vazia
+takeWhile' condition (a:as) 
+    | condition a = a : (takeWhile' condition as) -- respeita a condicao
+    | otherwise = takeWhile' condition as -- pula o elemento que nao respeita
+
+dropWhile' :: (t->Bool) -> [t] -> [t]
+dropWhile' _ [] = [] -- caso a lista seja vazia
+dropWhile' condition (a:as) 
+    | condition a = dropWhile' condition as -- respeita a condicao
+    | otherwise = a: (dropWhile' condition as) -- adiciona o elemento que nao respeita
+
+putOrder :: Ord t => [t] -> [t]
+putOrder [] = [] -- caso base
+putOrder (a:as) = putOrder ([x | x <- as, x <= a]) ++ [a] ++ putOrder ([y | y <- as, y > a]) -- quicksort
