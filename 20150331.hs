@@ -83,3 +83,54 @@ busca grafo vertices pilha inicio fim
 
 search :: (Eq t) => [(t,[t])] -> t -> t -> [(t,t)] -- funcao inicial que marca vertices como não lidos, define o incial como visitado e o coloca na fila
 search grafo inicio fim = busca grafo (marcaVertices (listaVertices grafo) inicio True) [inicio] inicio fim
+
+----------- questao 4 -------------
+
+-- Ex: [[9,4,5,0,8],[10,3,2,1,7],[9,1,6,3,15], [0,3,8,10,1],[1,16,9,12,7]]	
+
+-- Funcoes para ajudar a encontrar quais elementos fazem parte da regiao que sera calculada a mediana --
+
+lista :: [Int] -> Int -> [Int] -- Retorna uma lista de n primeiros numeros
+lista [] _ = []						
+lista (a:as) n | n > 0 = a:lista as (n-1)
+           | otherwise = lista as n
+
+listaIntervalo :: [Int] -> Int -> Int -> [Int] -- Retorna uma lista em um certo intervalo da matriz
+listaIntervalo (a:as) n tam = lista (drop (n - (tam `div` 2) - 1) (a:as)) tam
+
+listaLinhas :: [[Int]] -> Int -> Int -> Int -> [[Int]] -- Coloca os elementos que influenciam na mediana em uma lista dentro da linha
+listaLinhas [] _ tam j  = []
+listaLinhas (a:as) n tam j | n > 0 = listaIntervalo a j tam:listaLinhas as (n-1) tam j
+				           | otherwise = listaLinhas as (n) tam j
+
+linhas ::  [[Int]] -> Int -> Int -> Int -> [[Int]]  -- Retorna as linhas com listas de elementos que sao influenciadas pelo tamanho do filtro
+linhas (a:as) n tam j = listaLinhas (drop (n - (tam `div` 2) - 1) (a:as)) tam tam j
+
+-- Fim dessas funcoes de apoio --
+
+regiao :: [[Int]] -> Int -> Int -> Int -> [[Int]] -- Retorna os elementos da regiao que irao influenciar na mediana
+regiao [] _ _ _ = []
+regiao (a:as) i j n
+    | (i > n `div` 2 && j > n `div` 2 && i < length (a:as) - n `div` 2 + 1 && j < length (a:as) - n `div` 2 + 1) = linhas (a:as) i n j
+	| otherwise = []
+-- Calculos retirados do pseudo-codigo do algoritmo do filtro 2D de mediana - http://en.wikipedia.org/wiki/Median_filter
+
+concatena :: [[Int]]  -> [Int] -- Concatena os elementos que fazem parte da regiao para ser feito o calculo da mediana linha a linha
+concatena []  = []
+concatena (a:as) = a++concatena as
+
+quickSort :: [Int] -> [Int] -- Quicksort para ordenar os numeros e poder pegar a mediana
+quickSort [] = []
+quickSort (a:as) = quickSort [b | b <- as, b < a] ++ [a] ++ quickSort [b | b <- as, b >= a]
+
+mediana :: [Int] -> Int -- Calcula o valor da mediana dado um conjunto de elementos ordenadamente listados que definem a mediana
+mediana [] = 0
+mediana (a:as) = head (drop (length (a:as) `div`2) (a:as))
+
+novaMatriz :: [[Int]] -> Int -> Int -> [Int] -- Gera a nova matriz a partir da origianl, do elemento que deve ser recalculado e de n (dimensao do filtro)
+novaMatriz [] _ _ = []
+novaMatriz (a:as) elemento n =[mediana (quickSort (concatena (regiao (a:as) elemento e n))) | e <- [1..length(a:as)]]
+
+filtroMediana :: [[Int]] -> Int -> [[Int]] -- Funcao principal que recebe a matriz e n (dimensao do filtro)
+filtroMediana [] _ = []
+filtroMediana (a:as) n = [novaMatriz (a:as) elemento n | elemento <- [1..length(a:as)]]
