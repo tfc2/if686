@@ -1,3 +1,5 @@
+----------- TRABALHO 03 -------------
+
 ----------- questao 1 -------------
 
 {- 
@@ -134,3 +136,58 @@ novaMatriz (a:as) elemento n =[mediana (quickSort (concatena (regiao (a:as) elem
 filtroMediana :: [[Int]] -> Int -> [[Int]] -- Funcao principal que recebe a matriz e n (dimensao do filtro)
 filtroMediana [] _ = []
 filtroMediana (a:as) n = [novaMatriz (a:as) elemento n | elemento <- [1..length(a:as)]]
+
+
+----------- EXERCICIOS DE AULA -------------
+
+----------- questao 1 -------------
+
+-- afd "111" [(1,1,'1'),(1,3,'0'),(3,2,'1')] 1 [2]
+
+afd :: String -> [Int] -> [(Int, Int, Char)] -> Int -> [Int] -> Bool -- funcao principal que recebe o afd e envia para receber o proximo estado
+afd [] estados transicoes inicial aceitacoes = False -- caso base
+afd (a:as) estados transicoes inicial aceitacoes
+    | (as == []) && (aceitacao (proximoEstado (a:as) transicoes inicial) aceitacoes) = True 
+	| otherwise = afd as estados transicoes (proximoEstado (a:as) transicoes inicial) aceitacoes
+
+proximoEstado :: String -> [(Int, Int, Char)] -> Int -> Int -- recebe a entrada, a lista de transicoes e o estado atual, retornando qual o proximo estado alcancado
+proximoEstado (b:bs) ((partida,chegada,transicao):as) estadoAtual
+    | (partida == estadoAtual) && (transicao == b) = chegada
+	| otherwise = proximoEstado (b:bs) (as) estadoAtual
+	
+aceitacao :: Int -> [Int] -> Bool -- verifica se um estado esta na lista de estados de aceitacao
+aceitacao estado [] = False
+aceitacao estado (a:as)
+    | a == estado = True
+	| otherwise = aceitacao estado as
+	
+	
+----------- questao 2 -------------
+
+somatorioHexadecimal :: [String] -> String
+somatorioHexadecimal [] = imprimeResultado 0
+somatorioHexadecimal entrada = imprimeResultado (somatorioDecimal entrada)
+
+somatorioDecimal :: [String] -> Int -- soma os numeros usando a escala decimal
+somatorioDecimal [] = 0 -- caso base
+somatorioDecimal a:as
+    | a == '0' = somatorioDecimal as
+    | a == '1' = 1 + somatorioDecimal as
+	| a == '2' = 2 + somatorioDecimal as
+	| a == '3' = 3 + somatorioDecimal as
+	| a == '4' = 4 + somatorioDecimal as
+	| a == '5' = 5 + somatorioDecimal as
+	| a == '6' = 6 + somatorioDecimal as
+	| a == '7' = 7 + somatorioDecimal as
+	| a == '8' = 8 + somatorioDecimal as
+	| a == '9' = 9 + somatorioDecimal as
+	| a == 'a' = 10 + somatorioDecimal as
+	| a == 'b' = 11 + somatorioDecimal as
+	| a == 'c' = 12 + somatorioDecimal as
+	| a == 'd' = 13 + somatorioDecimal as
+	| a == 'e' = 14 + somatorioDecimal as
+	| a == 'f' = 15 + somatorioDecimal as
+	
+imprimeResultado :: Int -> String
+imprimeResultado 0 = "0"
+imprimeResultado decimal
