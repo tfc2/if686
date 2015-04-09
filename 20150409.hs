@@ -59,3 +59,44 @@ busca (Grafo grafo) vertices pilha inicio fim
 
 search :: (Eq t) => Grafos t -> t -> t -> Bool -- funcao inicial que marca vertices como não lidos, define o incial como visitado e o coloca na fila
 search (Grafo grafo) inicio fim = busca (Grafo grafo) (marcaVertices (listaVertices (Grafo grafo)) inicio True) [inicio] inicio fim
+
+----------- Atividades de sala -------------
+
+import Data.Char (ord)
+
+-- a primeira questao foi alterada em sala para ao inves de calcular o quadrado, calcular a raiz
+sqrList :: [Float] -> [Float]
+sqrList lista = map sqrt lista
+
+-- segunda questao
+posicaoAlfabeto :: String -> [Int]
+posicaoAlfabeto palavra = subAscii (map ord palavra)
+
+subAscii :: [Int] -> [Int]
+subAscii [] = []
+subAscii (a:as) = a-96 : subAscii as
+
+-- terceira questao
+map' :: (t -> u) -> [t] -> [u]
+map' f lista = [f a | a <- lista]
+
+-- quarta questao
+member :: (Eq t) => [t] -> t -> Bool
+member lista elemento = foldr (||) False (map ((==) elemento) lista)
+
+-- quinta questao
+union' :: (Eq t) => [t] -> [t] -> [t]
+union' lista1 lista2 = foldr (++) [] ([lista1]++([diferentes lista1 lista2]))
+
+diferentes :: (Eq t) => [t] -> [t] -> [t]
+diferentes _ [] = []
+diferentes lista1 (b:bs)
+    | member lista1 b = diferentes lista1 bs
+	| otherwise = b : diferentes lista1 bs
+
+-- sexta questao
+listaSoma :: [String] -> [Int]
+listaSoma palavras = map somaCaracteres palavras
+
+somaCaracteres :: String -> Int
+somaCaracteres palavra = foldr (+) 0 (posicaoAlfabeto palavra)
