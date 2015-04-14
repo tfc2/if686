@@ -30,18 +30,22 @@ mapAdjacencias f ((vertice,elemento):as) = ((f vertice), elemento):(mapAdjacenci
 
 -- fold --
 
-mapVertices :: (t ->u) -> [t] -> [u] -- aplica o map na lista de vertices
-mapVertices f vertices = map f vertices
+foldVertices :: (t -> u -> u) -> u -> [t] -> u -- aplica o fold na lista de vertices
+foldVertices f u [] = u
+foldVertices f u vertices = foldr f u vertices
 
-foldVertices :: (Eq t) => Grafos t -> [t] -- da "fold" no grafo para pegar so os vertices
-foldVertices Nil = []
-foldVertices (Grafo ((vertice, adjacencias):as))
-    | as == [] = vertice : (foldVertices Nil)
-    | otherwise = vertice : (foldVertices (Grafo (as)))
 
-foldGraph :: (Eq t) => (t -> u) -> Grafos t -> [u] -- fold graph usando dois metodos acima
-foldGraph f (Grafo grafo) =  mapVertices f (foldVertices (Grafo (grafo)))
--- exemplo: foldGaph ((+) 1) g = [2,3] -- soma 1 nos vertices
+pegaVertices :: (Eq t) => Grafos t -> [t] -- da "fold" no grafo para pegar so os vertices
+pegaVertices Nil = []
+pegaVertices (Grafo ((vertice, adjacencias):as))
+    | as == [] = vertice : (pegaVertices Nil)
+    | otherwise = vertice : (pegaVertices (Grafo (as)))
+
+foldGraph :: (Eq t) => (t -> u -> u) -> u -> Grafos t -> u -- fold graph usando dois metodos acima
+foldGraph f u (Grafo grafo) =  foldVertices f u (pegaVertices (Grafo (grafo)))
+
+-- exemplo: foldGraph (max) 0 g -- 2
+-- exemplo: foldGraph (+) 0 g -- 3
 
 -- Questao 3 --
 
