@@ -73,3 +73,34 @@ filterTree :: Eq t => (t -> Bool) -> Tree t -> [Tree t]
 filterTree _ NilT = []
 filterTree f a = arv : (filtrandoLista f (arv, floresta))
  where (arv, floresta) = filtro f a
+ 
+ ----------- EXERCICIOS DE SALA -------------
+ 
+ -- Questao 1 --
+
+-- exemplo: filtraListas [[1,2],[1,2,3]] 5 -- [1,2]
+
+filtraListas :: [[Int]] -> Int -> [[Int]]
+filtraListas listas filtro = filter (\x -> ((foldr (+) 0 x) < filtro )) listas
+
+-- Questao 2 --
+
+-- exemplo: inter [1,2,3] [2,3,4] -- [2,3]
+
+inter :: (Eq t) => [t] -> [t] -> [t]
+inter [] lista2 = []
+inter (a:as) lista2 = (filter (== a) lista2) ++ (inter as lista2)
+
+-- Questao 3 --
+
+-- exemplo: differ [1,2,3] [3,4,5] -- [1,2]
+
+diff :: (Eq t) => [t] -> [t] -> [t]
+diff [] lista2 = []
+diff (a:as) lista2 
+    | ((filter (== a) lista2) == []) = a : (diff as lista2)
+	| otherwise = diff as lista2
+	
+-- Questao 4 --
+
+-- mapfilter :: (a->Bool) -> [[a]] -> [[a]]
