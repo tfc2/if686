@@ -11,7 +11,7 @@ compose g f = map (junta g) f
 
 -- Questao 2 --
 
-data Grafos t = Nil | Grafo [(t, [(t,Int)])] deriving (Show, Eq) -- grafico representado por vertice e lista de (adjacencente, peso)
+data Grafos t = Nil | Grafo [(t, [(t,Int)])] deriving (Show, Eq) -- grafo representado por vertice e lista de (adjacencente, peso)
 
 g = Grafo ([(1,[(1,1),(2,1)]), (2,[(1,2)])]) -- exemplo
 
