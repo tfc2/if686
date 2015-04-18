@@ -2,7 +2,7 @@
 
 ----------- questao 1 -------------
 
-data Grafos t = Nil | Grafo [(t, [(t,Int)])] deriving (Show, Eq) -- grafico representado por vertice e lista de (adjacencente, peso)
+data Grafos t = Nil | Grafo [(t, [(t,Int)])] deriving (Show, Eq) -- grafo representado por vertice e lista de (adjacencente, peso)
 
 {-
 Ex. 1: show (Grafo [(1,[(2,1),(3,2)]), (2,[(1,3),(3,1)]), (3,[(2,2)])]) -- "Grafo [(1,[(2,1),(3,2)]),(2,[(1,3),(3,1)]),(3,[(2,2)])]"
