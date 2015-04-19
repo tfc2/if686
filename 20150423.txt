@@ -28,3 +28,23 @@ depth :: Tree t -> Int
 collapse :: Tree t -> [t]
 bfs :: Tree t -> t -> Bool
 mapTree :: (t -> u) -> Tree t -> Tree u
+
+--- 20150409 - 05-FUNCOES_ALTA_ORDEM.PDF
+
+1. Árvore de busca: defina em Haskell uma funcão para inserir um elemento em uma árvore de busca (não precisa ser balanceada). Em seguida, usando foldr, defina uma função que cria uma árvore a partir de uma lista de números inteiros e de uma funcão que insere elementos em uma árvore:
+criarArvore ::
+  Ord t => [t]->(Tree t->t->Tree t)->Tree t
+
+--- 20150414 - 05-FUNCOES_ALTA_ORDEM.PDF
+
+1. MapFilder: implemente uma função mapfilter que, sem usar map nem filter, comporte-se como a função map.filter
+
+--- 20150416 - 05-FUNCOES_ALTA_ORDEM.PDF
+
+1. MapFold: Implemente uma função mapfold que, sem usar map nem foldr, comporte-se como a função map.foldr. Em seguida, implemente uma função que pega a lista l produzida como resultado de uma aplicação de mapfold e, dada uma lista m de elementos de um tipo tão genérico quando possível, aplica os elementos de l a m.
+
+--- 20150416 - 06-APLICACAO_PARCIAL_FUNCOES.PDF
+
+1. Árvore Binária: dada uma árvore binária, devolver uma função que, dada uma árvore binária, verifica se as duas árvores são isomórficas
+
+2. ListaPares: dada uma lista, devolve uma função que, dada uma lista, devolve uma lista de pares onde cada par contémm um elemento de cada lista.
