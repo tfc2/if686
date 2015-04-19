@@ -145,10 +145,10 @@ mapTree f (Node v e d) = (Node (f v) (mapTree f e) (mapTree f d))
 ----- Questo 2 -----
 
 data Grafos = Grafo [(Int, [(Int,Double)])] deriving (Show, Eq) -- grafo representado por vertice e lista de (adjacencente, peso)
--- foi definido na questao que o rotulo seria obrigatoriamente um int, entao fizemos uma modificacao para tirar tambem o NilG
--- alem disso, precisamos alterar o valor dos pesos para um Double, para utilizar o algoritmo de djkstra que inicia distancias com um infinito (Double)
--- para um grafo não direcionado assumimos que na entrada se eu tiver uma adjacencia de numero1 para numero2, teremos tambem de numero2 para numero1 
--- para facilitar o algoritmo consideramos uma tabela = vertice, distancia minima para chegar ate ele, precedente
+-- foi definido na questao que o rotulo seria obrigatoriamente um int, entao fizemos uma modificacao para tirar tambem o Nil que nao seria mais necessario
+-- alem disso, foi preciso alterar o valor dos pesos para um Double, para utilizar o algoritmo de djkstra que inicia distancias com um infinito (Double)
+-- para um grafo não direcionado assumimos que na entrada se tiver uma adjacencia de numero1 para numero2, havera tambem de numero2 para numero1 
+-- para facilitar o algoritmo consideramos uma tabela de (vertice, distancia minima para chegar ate ele, precedente)
 -- referencia: http://www.inf.ufsc.br/grafos/temas/custo-minimo/dijkstra.html
 
 g = Grafo ([(0,[(1,10),(2,2)]), (1,[(0,10),(2,4),(3,5)]), (2,[(0,2),(1,4),(4,3)]), (3,[(1,5),(4,2)]), (4,[(2,3),(3,2)])]) -- exemplo
@@ -204,5 +204,5 @@ dijkstra grafo tabela abertos anterior
 	| ((length abertos) == 1) = alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos)) 
 	| otherwise = dijkstra grafo (alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos))) (marcaFechado abertos (verticeMenorDistancia tabela abertos)) (verticeMenorDistancia (alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos))) (marcaFechado abertos (verticeMenorDistancia tabela abertos)))
  
-geraFuncaoMenorCaminho :: Grafos -> (Int -> Int -> [Int]) -- por enquanto nao em forma de funcao
+geraFuncaoMenorCaminho :: Grafos -> (Int -> Int -> [Int]) -- funcao principal
 geraFuncaoMenorCaminho grafo inicio fim = formaCaminho (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) inicio fim
