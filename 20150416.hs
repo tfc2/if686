@@ -49,12 +49,14 @@ removeRepeticao (a:as)
 uniao' :: (Eq t) => [[t]] -> [t]
 uniao' listas = foldr (\x y -> ([a | a <- x, (length [b |b <-y, a == b] == 0 )]) ++ y) [] listas
 
--- Questao 6 --
+-- Questao 6: mapfold --
+
+-- Questao 7 --
 
 somaNumero :: [Int] -> Int -> [Int]
 somaNumero lista n = map (+ n) lista
 
--- Questao 7 --
+-- Questao 8 --
 
 maiorNumero :: [Int] -> Int
 maiorNumero lista = foldr (max) 0 lista
