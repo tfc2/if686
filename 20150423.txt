@@ -1,0 +1,30 @@
+--- 20150319 - 01_INTRO_PROGRAMACAO_FUNCIONAL.PDF ---
+
+1. Fibonnaci: implemente uma função que, dado um número inteiro N, retorne uma lista de inteiros com os N primeiros números pares da sequência de Fibonacci.
+
+2. Ordena soma: crie um função que recebe uma lista de inteiros e retorna a lista ordenada em função da soma de seus digitos (crescente)
+
+--- 20150324 - 02-TUPLAS_CASAMENTO_PADROES.PDF ---
+
+1. Processamento de Texto (exemplos no slide)
+
+--- 20150326 - 03-POLIMORFISMO.PDF ---
+
+1. Função agrupar: crie uma função agrupar que recebe uma lista de listas de valores de um tipo t que podem ser comparados para saber se são iguais e devolve uma lista de pares (t, Int) onde o primeiro elemento é um valor do tipo t que existe em pelo menos uma das sub-listas da entrada e o segundo é o número de ocorrências desse valor nas sub-listas:
+Prelude> agrupar [“Fernando”, “Castor”]
+[( 'F', 1), ('e', 1), ('r', 2), ('n', 2), ('a', 2), ('d', 1), ('o', 2), ('C', 1), ('s', 1), ('t', 1)]
+Prelude> agrupar [[4,2,4,3,4,4,4,5,4,6], [1,2,3,4,5],[2]]
+[(4, 7), (2, 3), (3, 2), (5, 2), (6, 1), (1, 1)]
+Prelude> agrupar [[(+), (-)], [agrupar]]
+???????????
+
+--- 20150407 - 04-TIPOS_ALGEBRICOS.PDF ---
+
+1. Defina as seguintes funções:
+showExpr :: Expr -> String -- (feita no arquivo 20150407)
+toList :: List t -> [t]
+fromList :: [t] -> List t
+depth :: Tree t -> Int
+collapse :: Tree t -> [t]
+bfs :: Tree t -> t -> Bool
+mapTree :: (t -> u) -> Tree t -> Tree u
