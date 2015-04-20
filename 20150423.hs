@@ -99,7 +99,7 @@ retirar x [] = []
 retirar x ([]:as) = retirar x as
 retirar x ((b:bs):as)
     | x == b = retirar x (bs:as)
-    e| otherwise = [b] : retirar x (bs:as)
+    | otherwise = [b] : retirar x (bs:as)
 
 agrupar :: Eq t => [[t]] -> [(t, Int)]
 agrupar [] = []
