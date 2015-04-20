@@ -153,6 +153,8 @@ data Grafos = Grafo [(Int, [(Int,Double)])] deriving (Show, Eq) -- grafo represe
 
 g = Grafo ([(0,[(1,10),(2,2)]), (1,[(0,10),(2,4),(3,5)]), (2,[(0,2),(1,4),(4,3)]), (3,[(1,5),(4,2)]), (4,[(2,3),(3,2)])]) -- exemplo
 
+h = Grafo ([(0,[(1,10),(2,2)]), (1,[(0,10),(2,4)]), (2,[(0,2),(1,4),(4,3)]), (3,[]), (4,[(2,3)])]) -- exemplo
+
 infinito = 1/0
 
 formaTabela :: Grafos -> Int -> [(Int, Double, Int)] -- forma a tabela usada no algoritmo colocando a distancia do vertice inicial = 0
@@ -187,7 +189,7 @@ auxTabela ((vertice1, distanciaAtual, precendete):as) (anterior, distancia) aber
     | otherwise = (vertice1, distanciaAtual, precendete) : (auxTabela as (anterior, distancia) abertos (vertice2,peso))
 
 alteraTabela :: [(Int, Double, Int)] -> (Int, Double) -> [Int] -> [(Int, Double)] -> [(Int, Double, Int)] -- atualiza os adjacentes usando auxTabela
-alteraTabela _ _ _ [] = []
+alteraTabela tabela _ _ [] = tabela
 alteraTabela tabela verticeAnterior abertos ((vertice,peso):as)
     | as == [] = auxTabela tabela verticeAnterior abertos (vertice,peso)
     | otherwise = alteraTabela (auxTabela tabela verticeAnterior abertos (vertice,peso)) verticeAnterior abertos as
@@ -199,10 +201,15 @@ formaCaminho ((vertice, distancia, precedente):as) tabelaOficial inicio posicao
     | vertice == posicao = (formaCaminho tabelaOficial tabelaOficial inicio precedente) ++ [vertice]
     | otherwise = formaCaminho as tabelaOficial inicio posicao
 
+verificaCaminho :: [Int] -> Int -> Int -> [Int] -- verifica se o caminho formado é válido
+verificaCaminho (a:as) inicio fim
+    | a == inicio = (a:as)
+    | otherwise = [] -- se o primeiro elemento não for o inicio, o caminho não existe
+
 dijkstra :: Grafos -> [(Int, Double, Int)] -> [Int] -> (Int, Double) -> [(Int, Double, Int)] -- algoritmo de dijkstra
 dijkstra grafo tabela abertos anterior
 	| ((length abertos) == 1) = alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos)) 
 	| otherwise = dijkstra grafo (alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos))) (marcaFechado abertos (verticeMenorDistancia tabela abertos)) (verticeMenorDistancia (alteraTabela tabela anterior abertos (adjacentes grafo (verticeMenorDistancia tabela abertos))) (marcaFechado abertos (verticeMenorDistancia tabela abertos)))
  
 geraFuncaoMenorCaminho :: Grafos -> (Int -> Int -> [Int]) -- funcao principal
-geraFuncaoMenorCaminho grafo inicio fim = formaCaminho (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) inicio fim
+geraFuncaoMenorCaminho grafo inicio fim = verificaCaminho (formaCaminho (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) inicio fim) inicio fim
