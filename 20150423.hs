@@ -163,16 +163,17 @@ criarArvore lista funcao = foldr funcao NilT (reverse lista) -- o reverse foi ut
 
 -- 1. MapFilter:
 
-mapfilter :: [t] -> (t -> t) -> (t -> Bool) -> [t] -- (a -> Bool) -> [[a]] -> [[a]] segundo o ghci
-mapfilter lista fmap ffilter = [fmap y | y <- [x | x <- lista, ffilter x]]
+mapfilter :: (t -> Bool) -> [[t]] -> [[t]]
+mapfilter ffilter [] = []
+mapfilter ffilter (a:as) = [y | y <- a, ffilter y] : (mapfilter ffilter as)
 
--- mapfilter [1,2,3,4,5] (+ (1)) (> (3)) -- resultado: [5,6]
+-- (mapfilter) (>(2)) [[1,2,3,4],[2,3,4,5],[1,2,3,4]] -- resultado: [[3,4],[3,4,5],[3,4]]
 
 -- 20150416 --
 
 -- 1. MapFold:
 
-mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a] -- FAZER!
+-- mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a] -- FAZER!
 
 -- 2. Isomorfismo:
 
