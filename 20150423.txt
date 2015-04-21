@@ -1,6 +1,7 @@
 --- 20150319 - 01_INTRO_PROGRAMACAO_FUNCIONAL.PDF ---
 
-1. Fibonnaci: implemente uma função que, dado um número inteiro N, retorne uma lista de inteiros com os N primeiros números pares da sequência de Fibonacci.
+1. Fibonnaci: implemente uma função que, dado um número inteiro N, retorne uma lista de inteiros com os N primeiros números pares da 
+sequência de Fibonacci.
 
 2. Ordena soma: crie um função que recebe uma lista de inteiros e retorna a lista ordenada em função da soma de seus digitos (crescente)
 
@@ -10,7 +11,9 @@
 
 --- 20150326 - 03-POLIMORFISMO.PDF ---
 
-1. Função agrupar: crie uma função agrupar que recebe uma lista de listas de valores de um tipo t que podem ser comparados para saber se são iguais e devolve uma lista de pares (t, Int) onde o primeiro elemento é um valor do tipo t que existe em pelo menos uma das sub-listas da entrada e o segundo é o número de ocorrências desse valor nas sub-listas:
+1. Função agrupar: crie uma função agrupar que recebe uma lista de listas de valores de um tipo t que podem ser comparados para saber se
+são iguais e devolve uma lista de pares (t, Int) onde o primeiro elemento é um valor do tipo t que existe em pelo menos uma das sub-listas
+da entrada e o segundo é o número de ocorrências desse valor nas sub-listas:
 Prelude> agrupar [“Fernando”, “Castor”]
 [( 'F', 1), ('e', 1), ('r', 2), ('n', 2), ('a', 2), ('d', 1), ('o', 2), ('C', 1), ('s', 1), ('t', 1)]
 Prelude> agrupar [[4,2,4,3,4,4,4,5,4,6], [1,2,3,4,5],[2]]
@@ -31,7 +34,9 @@ mapTree :: (t -> u) -> Tree t -> Tree u
 
 --- 20150409 - 05-FUNCOES_ALTA_ORDEM.PDF
 
-1. Árvore de busca: defina em Haskell uma funcão para inserir um elemento em uma árvore de busca (não precisa ser balanceada). Em seguida, usando foldr, defina uma função que cria uma árvore a partir de uma lista de números inteiros e de uma funcão que insere elementos em uma árvore:
+1. Árvore de busca: defina em Haskell uma funcão para inserir um elemento em uma árvore de busca (não precisa ser balanceada). Em seguida,
+usando foldr, defina uma função que cria uma árvore a partir de uma lista de números inteiros e de uma funcão que insere elementos em uma
+árvore:
 criarArvore ::
   Ord t => [t]->(Tree t->t->Tree t)->Tree t
 
@@ -41,10 +46,12 @@ criarArvore ::
 
 --- 20150416 - 05-FUNCOES_ALTA_ORDEM.PDF
 
-1. MapFold: Implemente uma função mapfold que, sem usar map nem foldr, comporte-se como a função map.foldr. Em seguida, implemente uma função que pega a lista l produzida como resultado de uma aplicação de mapfold e, dada uma lista m de elementos de um tipo tão genérico quando possível, aplica os elementos de l a m.
+1. MapFold: Implemente uma função mapfold que, sem usar map nem foldr, comporte-se como a função map.foldr. Em seguida, implemente uma
+função que pega a lista l produzida como resultado de uma aplicação de mapfold e, dada uma lista m de elementos de um tipo tão genérico
+quando possível, aplica os elementos de l a m.
 
 --- 20150416 - 06-APLICACAO_PARCIAL_FUNCOES.PDF
 
-1. Árvore Binária: dada uma árvore binária, devolver uma função que, dada uma árvore binária, verifica se as duas árvores são isomórficas
+2. Árvore Binária: dada uma árvore binária, devolver uma função que, dada uma árvore binária, verifica se as duas árvores são isomórficas
 
-2. ListaPares: dada uma lista, devolve uma função que, dada uma lista, devolve uma lista de pares onde cada par contémm um elemento de cada lista.
+3. ListaPares: dada uma lista, devolve uma função que, dada uma lista, devolve uma lista de pares onde cada par contém um elemento de cada lista.

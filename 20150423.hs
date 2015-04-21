@@ -108,7 +108,7 @@ agrupar ((b:bs):as) = (b, (conta 0 b ((b:bs):as))) : agrupar (retirar b ((b:bs):
 
 -- 20150407 --
 
--- 2. Defina as seguintes funções:
+-- 1. Defina as seguintes funções:
 
 data List t = Nil | Cabeca t (List t) deriving (Show)
 
@@ -142,7 +142,29 @@ mapTree :: (t -> u) -> Tree t -> Tree u
 mapTree f NilT = NilT
 mapTree f (Node v e d) = (Node (f v) (mapTree f e) (mapTree f d))
 
------ Questo 2 -----
+-- 20150409 --
+
+-- 1. Arvore de busca:
+
+a = Node 8 (Node 3 (Node 1 NilT NilT) (Node 6 (Node 4 NilT NilT) (Node 7 NilT NilT))) (Node 10 NilT (Node 14 (Node 13 NilT NilT) NilT))
+
+inserir:: Ord t => t -> Tree t -> Tree t
+inserir elemento NilT = (Node elemento NilT NilT)
+inserir elemento (Node valor esquerda direita) 
+    | elemento > valor = (Node valor esquerda (inserir elemento direita)) 
+    | elemento < valor = (Node valor (inserir elemento esquerda) direita)
+
+criarArvore :: Ord t => [t] -> (t -> Tree t -> Tree t) -> Tree t
+criarArvore lista funcao = foldr funcao NilT (reverse lista) -- o reverse foi utilizado para a raiz ser o primeiro elemento da lista, nao o ultimo
+
+-- criarArvore [8,3,1,6,4,7,10,14,13] inserir
+
+-- 20150414 --
+
+-- 1. MapFilter:
+
+
+----- Questao 2 -----
 
 data Grafos = Grafo [(Int, [(Int,Double)])] deriving (Show, Eq) -- grafo representado por vertice e lista de (adjacencente, peso)
 -- foi definido na questao que o rotulo seria obrigatoriamente um int, entao fizemos uma modificacao para tirar tambem o Nil que nao seria mais necessario
