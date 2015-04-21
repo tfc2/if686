@@ -163,6 +163,29 @@ criarArvore lista funcao = foldr funcao NilT (reverse lista) -- o reverse foi ut
 
 -- 1. MapFilter:
 
+-- 20150416 --
+
+-- 1. MapFold:
+
+-- 2. Isomorfismo:
+
+iso1 = Node 1 (Node 2 (Node 3 NilT NilT) NilT) (Node 4 NilT (Node 5 NilT NilT))
+iso2 = Node 3 (Node 2 (Node 5 NilT NilT) NilT) (Node 7 NilT (Node 4 NilT NilT))
+iso3 = Node 3 (Node 2 NilT NilT) (Node 7 NilT NilT)
+
+isomorficas :: (Eq t) => Tree t -> (Tree t -> Bool)
+isomorficas NilT NilT = True
+isomorficas (Node valor1 esquerda1 direita1) (Node valor2 esquerda2 direita2)
+    | ((esquerda1 == NilT) && (esquerda2 /= NilT) || (esquerda1 /= NilT) && (esquerda2 == NilT))= False
+    | ((direita1 == NilT) && (direita2 /= NilT) || (direita1 /= NilT) && (direita2 == NilT))= False
+    | otherwise = (isomorficas esquerda1 esquerda2) && (isomorficas direita1 direita2)
+
+-- 3. Lista de pares:
+
+listaPares :: [t] -> ([t] -> [(t,t)])
+listaPares [] _ = []
+listaPares _ [] = []
+listaPares (a:as) (b:bs) = (a,b) : listaPares as bs
 
 ----- Questao 2 -----
 

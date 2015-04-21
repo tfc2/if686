@@ -52,6 +52,6 @@ quando possível, aplica os elementos de l a m.
 
 --- 20150416 - 06-APLICACAO_PARCIAL_FUNCOES.PDF
 
-2. Árvore Binária: dada uma árvore binária, devolver uma função que, dada uma árvore binária, verifica se as duas árvores são isomórficas
+2. Isomorfismo: dada uma árvore binária, devolver uma função que, dada uma árvore binária, verifica se as duas árvores são isomórficas
 
-3. ListaPares: dada uma lista, devolve uma função que, dada uma lista, devolve uma lista de pares onde cada par contém um elemento de cada lista.
+3. Lista de pares: dada uma lista, devolve uma função que, dada uma lista, devolve uma lista de pares onde cada par contém um elemento de cada lista.
