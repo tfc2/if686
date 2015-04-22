@@ -184,7 +184,7 @@ func True n = n + 10
 func _ n = n - 5
 
 -- [ f [True, False] | f <- ((mapfold) func [1,2,10])] -- resultado: [6,7,15]
----     (a:as / [])                 (funcao) (lista / acumulador)
+---     (a:as / [])                 (funcao) (lista / valor da lista = acumulador)
 
 -- 2. Isomorfismo:
 
