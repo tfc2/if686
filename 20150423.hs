@@ -173,13 +173,18 @@ mapfilter ffilter (a:as) = [y | y <- a, ffilter y] : (mapfilter ffilter as)
 
 -- 1. MapFold:
 
--- mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a] -- FALTA FINALIZAR
+mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a]
+mapfold funcao lista = [(f x) | x <- lista]
+	where
+		f acumulador [] = acumulador
+		f acumulador (a:as) = f (funcao a acumulador) as
 
 func :: Bool -> Int -> Int -- funcao para teste
 func True n = n + 10
 func _ n = n - 5
 
--- [ f [True, False] | f <- ((map.foldr) func [1,2,10])] -- resultado: [6,7,15]
+-- [ f [True, False] | f <- ((mapfold) func [1,2,10])] -- resultado: [6,7,15]
+---     (a:as / [])                 (funcao) (lista / acumulador)
 
 -- 2. Isomorfismo:
 
