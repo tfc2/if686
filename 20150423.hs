@@ -173,7 +173,13 @@ mapfilter ffilter (a:as) = [y | y <- a, ffilter y] : (mapfilter ffilter as)
 
 -- 1. MapFold:
 
--- mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a] -- FAZER!
+-- mapfold :: (a1 -> a -> a) -> [a] -> [[a1] -> a] -- FALTA FINALIZAR
+
+func :: Bool -> Int -> Int -- funcao para teste
+func True n = n + 10
+func _ n = n - 5
+
+-- [ f [True, False] | f <- ((map.foldr) func [1,2,10])] -- resultado: [6,7,15]
 
 -- 2. Isomorfismo:
 
