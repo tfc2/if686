@@ -298,6 +298,25 @@ Colocando parentesis: (map.)(.)
 
 map :: (a -> b) -> [a] -> [b]
 (.) :: (d -> e) -> (c -> d) -> c -> e
+(.) :: (g -> h) -> (f -> g) -> f -> h
+
+(d -> e) = (a -> b) -> [a] -> [b]
+d = (a -> b)
+e = [a] -> [b]
+(c -> d) = (g -> h) -> (f -> g) -> f -> g
+c = (g -> h)
+d = (f -> g) -> f -> h
+
+igualando d:
+a = (f -> g)
+b = (f -> h)
+
+e = [f -> g] -> [f -> h]
+c = (g -> h)
+
+map.(.) :: c -> e
+map.(.) :: (g -> h) -> [f -> g] -> [f -> h]
+
 
 -}
 
