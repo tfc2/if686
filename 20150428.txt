@@ -40,7 +40,56 @@ l = (j -> k)
 m = (d -> [j]) -> d -> [k]
 igualando m:
 Num c = (d -> [j]) -> d -> [k]
-foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]——(\x y z -> foldr z x y).map——map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) • (foldr).(.)$(!!)
+foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]——(\x y z -> foldr z x y).map——map.((.) (foldr (++) (foldr (++) [] [[1], [2]])))
+
+(foldr (++) [] [[1], [2]]):
+foldr :: (a -> b -> b) -> b -> [a] -> b
+(++) :: [c] -> [c] -> [c]
+[] :: [d]
+[[1],[2]] :: Num e -> [[e]]
+(a -> b -> b) = [c] -> [c] -> [c]
+a = [c]
+b = [c]
+logo a = b = [c]
+b = [d]
+logo a = b = [c] = [d]
+[a] = [[e]]
+como a = b, [b] = [[e]], b = [e]
+(foldr (++) [] [[1], [2]]) :: Num e => [e]
+
+(foldr (++) (foldr (++) [] [[1], [2]])):
+foldr :: (f -> g -> g) -> g -> [f] -> g
+(++) :: [h] -> [h] -> [h]
+(foldr (++) [] [[1], [2]]) :: Num e => [e]
+(f -> g -> g) = [h] -> [h] -> [h]
+f = [h]
+g = [h]
+g = [e]
+logo f = [h] = g = [e]
+(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e [[e]] -> [e]
+
+((.) (foldr (++) (foldr (++) [] [[1], [2]]))):
+(.) :: (j -> k) -> (i -> j) -> i -> k
+(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e [[e]] -> [e]
+(j -> k) = [[e]] -> [e]
+j = [[e]]
+k = [e]
+((.) (foldr (++) (foldr (++) [] [[1], [2]]))) :: Num e => (i -> [[e]]) -> i -> [e]
+
+map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))):
+map :: (l -> m) -> [l] -> [m]
+(.) :: (o -> p) -> (n -> o) -> n -> p
+((.) (foldr (++) (foldr (++) [] [[1], [2]]))) :: Num e => (i -> [[e]]) -> i -> [e]
+(o -> p) = (l -> m) -> [l] -> [m]
+o = (l -> m)
+p = [l] -> [m]
+(n -> o) = (i -> [[e]]) -> i -> [e]
+n = (i -> [[e]])
+o = i -> [e]
+igualando o o:
+l = i
+m = [e]
+map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) :: Num m => (i -> [[e]]) -> [i] -> [[e]]
 
 ——
 
