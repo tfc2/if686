@@ -1,8 +1,47 @@
 —— TRABALHO 10 ——
 
 
-1. Determine os tipos das expressões a seguir. É necessário mostrar o desenvolvimento que levou você dos tipos das sub-expressões ao tipo da expressão final (por exemplo, como você saiu dos tipos de map, foldr, (.) e (+) para chegar ao tipo de foldr (+).(.).map).a) foldr (+).(.).map
-b) (\x y z -> foldr z x y).mapc) map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) • (foldr).(.)$(!!)
+1. Determine os tipos das expressões a seguir. É necessário mostrar o desenvolvimento que levou você dos tipos das sub-expressões ao tipo da expressão final (por exemplo, como você saiu dos tipos de map, foldr, (.) e (+) para chegar ao tipo de foldr (+).(.).map).foldr (+).(.).map
+Colocando parêntesis para ficar mais fácil:
+(foldr (+)).((.).map)
 
+foldr(+):
+foldr :: (a -> b -> b) -> b -> [a] -> b
+(+) :: Num c -> c -> c -> c
+(a -> b -> b) = c -> c -> c
+a = c
+b = c
+foldr (+) :: Num c -> c -> [c] -> c
 
-d) (foldr).(.)$(!!)
+(.).map:
+(.) :: (e -> f) -> (d -> e) -> d -> f
+(.) :: (h -> i) -> (g -> h) -> g -> i
+map :: (j -> k) -> [j] -> [k]
+(h -> i) = (e -> f) -> (d -> e) -> d -> f
+h = (e -> f)
+i = (d -> e) -> d -> f
+(g -> h) = (j -> k) -> [j] -> [k]
+g = (j -> k)
+h = [j] -> [k]
+igualando h:
+e = [j]
+f = [k]
+(.).map: (j -> k) -> (d -> [j]) -> d -> [k]
+
+foldr (+).(.).map:
+foldr (+) :: Num c -> c -> [c] -> c
+(.) :: (m -> n) -> (l -> m) -> l -> n
+(.).map: (j -> k) -> (d -> [j]) -> d -> [k]
+(m -> n) = Num c -> c -> [c] -> c
+m = c
+n = [c] -> c
+(l -> m) = (j -> k) -> (d -> [j]) -> d -> [k]
+l = (j -> k)
+m = (d -> [j]) -> d -> [k]
+igualando m:
+Num c = (d -> [j]) -> d -> [k]
+foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]——(\x y z -> foldr z x y).map——map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) • (foldr).(.)$(!!)
+
+——
+
+(foldr).(.)$(!!)
