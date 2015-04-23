@@ -40,7 +40,24 @@ l = (j -> k)
 m = (d -> [j]) -> d -> [k]
 igualando m:
 Num c = (d -> [j]) -> d -> [k]
-foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]——(\x y z -> foldr z x y).map——map.((.) (foldr (++) (foldr (++) [] [[1], [2]])))
+foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]——(\x y z -> foldr z x y).map
+
+(\x y z -> foldr z x y) :: b -> [a] -> (a -> b -> b) -> b
+(.) :: (d -> e) -> (c -> d) -> c -> e
+map :: (f -> g) -> [f] -> [g]
+
+(d -> e) = b -> [a] -> (a -> b -> b) -> b
+d = b
+e = [a] -> (a -> b -> b) -> b
+
+(c -> d) = (f -> g) -> [f] -> [g]
+c = (f -> g)
+d = [f] -> [g]
+
+igualando d:
+b = [f] -> [g]
+
+(\x y z -> foldr z x y).map :: (f -> g) -> [a] -> (a -> ([f] -> [g]) -> [f] -> [g]) -> [f] -> [g]——map.((.) (foldr (++) (foldr (++) [] [[1], [2]])))
 
 (foldr (++) [] [[1], [2]]):
 foldr :: (a -> b -> b) -> b -> [a] -> b
