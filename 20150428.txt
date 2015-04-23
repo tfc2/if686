@@ -1,0 +1,8 @@
+—— TRABALHO 10 ——
+
+
+1. Determine os tipos das expressões a seguir. É necessário mostrar o desenvolvimento que levou você dos tipos das sub-expressões ao tipo da expressão final (por exemplo, como você saiu dos tipos de map, foldr, (.) e (+) para chegar ao tipo de foldr (+).(.).map).a) foldr (+).(.).map
+b) (\x y z -> foldr z x y).mapc) map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) • (foldr).(.)$(!!)
+
+
+d) (foldr).(.)$(!!)
