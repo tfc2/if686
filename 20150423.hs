@@ -294,7 +294,6 @@ b = [c]
 foldr (:) :: [c] -> [c] -> [c]
 
 2. map.(.)
-Colocando parentesis: (map.)(.)
 
 map :: (a -> b) -> [a] -> [b]
 (.) :: (d -> e) -> (c -> d) -> c -> e
@@ -303,6 +302,7 @@ map :: (a -> b) -> [a] -> [b]
 (d -> e) = (a -> b) -> [a] -> [b]
 d = (a -> b)
 e = [a] -> [b]
+
 (c -> d) = (g -> h) -> (f -> g) -> f -> g
 c = (g -> h)
 d = (f -> g) -> f -> h
@@ -311,12 +311,53 @@ igualando d:
 a = (f -> g)
 b = (f -> h)
 
+por consequencia:
 e = [f -> g] -> [f -> h]
 c = (g -> h)
 
-map.(.) :: c -> e
 map.(.) :: (g -> h) -> [f -> g] -> [f -> h]
 
+3. foldr (+).(.).map
+Corrigindo os parenteses para ficar mais facil:
+(foldr (+)).((.).map)
+
+foldr(+):
+
+foldr :: (a -> b -> b) -> b -> [a] -> b
+(+) :: Num c -> c -> c -> c
+(a -> b -> b) = c -> c -> c
+a = c
+b = c
+foldr (+) :: Num c -> c -> [c] -> c
+
+(.).map:
+(.) :: (e -> f) -> (d -> e) -> d -> f
+(.) :: (h -> i) -> (g -> h) -> g -> i
+map :: (j -> k) -> [j] -> [k]
+(h -> i) = (e -> f) -> (d -> e) -> d -> f
+h = (e -> f)
+i = (d -> e) -> d -> f
+(g -> h) = (j -> k) -> [j] -> [k]
+g = (j -> k)
+h = [j] -> [k]
+igualando h:
+e = [j]
+f = [k]
+(.).map: (j -> k) -> (d -> [j]) -> d -> [k]
+
+foldr (+).(.).map:
+foldr (+) :: Num c -> c -> [c] -> c
+(.) :: (m -> n) -> (l -> m) -> l -> n
+(.).map: (j -> k) -> (d -> [j]) -> d -> [k]
+(m -> n) = Num c -> c -> [c] -> c
+m = c
+n = [c] -> c
+(l -> m) = (j -> k) -> (d -> [j]) -> d -> [k]
+l = (j -> k)
+m = (d -> [j]) -> d -> [k]
+igualando m:
+Num c = (d -> [j]) -> d -> [k]
+foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]
 
 -}
 
