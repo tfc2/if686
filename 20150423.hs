@@ -277,3 +277,28 @@ dijkstra grafo tabela abertos anterior
  
 geraFuncaoMenorCaminho :: Grafos -> (Int -> Int -> [Int]) -- funcao principal
 geraFuncaoMenorCaminho grafo inicio fim = verificaCaminho (formaCaminho (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) (dijkstra grafo (formaTabela grafo inicio) (defineAbertos grafo) (inicio, 0.0)) inicio fim) inicio fim
+
+------ Exercício de sala ------
+
+{-
+
+1. foldr (:)
+
+foldr :: (a -> b -> b) -> b -> [a] -> b
+(:) :: c -> [c] -> [c]
+
+(a -> b -> b) = (c -> [c] -> [c])
+a = c
+b = [c]
+
+foldr (:) :: [c] -> [c] -> [c]
+
+2. map.(.)
+Colocando parentesis: (map.)(.)
+
+map :: (a -> b) -> [a] -> [b]
+(.) :: (d -> e) -> (c -> d) -> c -> e
+
+-}
+
+
