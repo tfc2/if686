@@ -359,7 +359,7 @@ igualando m:
 Num c = (d -> [j]) -> d -> [k]
 foldr (+).(.).map :: Num (d -> [j]) -> d -> [k] => (j -> k) -> [(d -> [j]) -> d -> [k]] -> (d -> [j]) -> d -> [k]
 
-3. map.map.foldr
+4. map.map.foldr
 Colocando parêntesis para ficar mais facil:
 map.(map.foldr)
 
@@ -395,7 +395,40 @@ h = [g]
 i = [[f]] -> [g]
 map.(map.foldr) :: (f -> g -> g) -> [[g]] -> [[[f]] -> [g]]
 
+5. map.((.) (foldr (++) (foldr (++) [] [[1], [2]])))
 
+6. (foldr).(.)$(!!)
+Colocando parêntesis para ficar mais facil:
+((foldr).(.))$(!!) 
+
+(foldr).(.):
+foldr :: (a -> b -> b) -> b -> [a] -> b
+(.) :: (d -> e) -> (c -> d) -> c -> e
+(.) :: (g -> h) -> (f -> g) -> f -> h
+(d -> e) = (a -> b -> b) -> b -> [a] -> b
+d = (a -> b -> b)
+e = b -> [a] -> b
+(c -> d) = (g -> h) -> (f -> g) -> f -> h
+c = (g -> h)
+d = (f -> g) -> f -> h
+igualando d:
+a = (f -> g)
+b = h = f
+c = (g -> f)
+(foldr).(.) :: (g -> f) -> f -> [f -> g] -> f
+
+(foldr).(.)$(!!):
+(foldr).(.) :: (g -> f) -> f -> [f -> g] -> f
+$ :: (i -> j) -> i -> j
+(!!) :: [k] -> Int -> k
+(i -> j) = (g -> f) -> f -> [f -> g] -> f
+i = (g -> f)
+j = f -> [f -> g] -> f
+i = [k] -> Int -> k
+igualando i:
+g = [k]
+f = Int -> k
+(foldr).(.)$(!!) :: (Int -> k) -> [(Int -> k) -> [k]] -> Int -> k
 
 -}
 
