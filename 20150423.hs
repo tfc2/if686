@@ -318,7 +318,7 @@ c = (g -> h)
 map.(.) :: (g -> h) -> [f -> g] -> [f -> h]
 
 3. foldr (+).(.).map
-Corrigindo os parenteses para ficar mais facil:
+Colocando parêntesis para ficar mais facil:
 (foldr (+)).((.).map)
 
 foldr(+):
