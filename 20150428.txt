@@ -10,7 +10,7 @@ Colocando parêntesis para ficar mais fácil:
 
 foldr(+):
 foldr :: (a -> b -> b) -> b -> [a] -> b
-(+) :: Num c -> c -> c -> c
+(+) :: Num c => c -> c -> c
 (a -> b -> b) = c -> c -> c
 a = c
 b = c
