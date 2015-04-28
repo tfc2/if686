@@ -324,11 +324,11 @@ Colocando parêntesis para ficar mais facil:
 foldr(+):
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
-(+) :: Num c -> c -> c -> c
+(+) :: Num c => c -> c -> c
 (a -> b -> b) = c -> c -> c
 a = c
 b = c
-foldr (+) :: Num c -> c -> [c] -> c
+foldr (+) :: Num c => c -> [c] -> c
 
 (.).map:
 (.) :: (e -> f) -> (d -> e) -> d -> f
@@ -346,10 +346,10 @@ f = [k]
 (.).map: (j -> k) -> (d -> [j]) -> d -> [k]
 
 foldr (+).(.).map:
-foldr (+) :: Num c -> c -> [c] -> c
+foldr (+) :: Num c => c -> [c] -> c
 (.) :: (m -> n) -> (l -> m) -> l -> n
 (.).map: (j -> k) -> (d -> [j]) -> d -> [k]
-(m -> n) = Num c -> c -> [c] -> c
+(m -> n) = Num c => c -> [c] -> c
 m = c
 n = [c] -> c
 (l -> m) = (j -> k) -> (d -> [j]) -> d -> [k]
@@ -401,7 +401,7 @@ map.(map.foldr) :: (f -> g -> g) -> [[g]] -> [[[f]] -> [g]]
 foldr :: (a -> b -> b) -> b -> [a] -> b
 (++) :: [c] -> [c] -> [c]
 [] :: [d]
-[[1],[2]] :: Num e -> [[e]]
+[[1],[2]] :: Num e => [[e]]
 (a -> b -> b) = [c] -> [c] -> [c]
 a = [c]
 b = [c]
@@ -421,11 +421,11 @@ f = [h]
 g = [h]
 g = [e]
 logo f = [h] = g = [e]
-(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e [[e]] -> [e]
+(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e => [[e]] -> [e]
 
 ((.) (foldr (++) (foldr (++) [] [[1], [2]]))):
 (.) :: (j -> k) -> (i -> j) -> i -> k
-(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e [[e]] -> [e]
+(foldr (++) (foldr (++) [] [[1], [2]])) :: Num e => [[e]] -> [e]
 (j -> k) = [[e]] -> [e]
 j = [[e]]
 k = [e]
