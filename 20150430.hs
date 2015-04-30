@@ -9,4 +9,4 @@ instance Monad Failable where
 
 -- ta dando erro ainda
  criarFila :: Int -> t -> Failable (t, Fila t)
- criarFila capacidade primeiroElemento = Works (Element primeiroElemento (Nil))
+ criarFila capacidade primeiroElemento = Works (primeiroElemento, (Element primeiroElemento (Nil)))
