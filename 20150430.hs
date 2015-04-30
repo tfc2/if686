@@ -36,3 +36,11 @@ adicionaElemento novoElemento (Element elemento (fila) capacidade) = (Element el
 
 -- Ex. 1: adicionaElemento 4 (Element 5 (Element 3 Nil 4) 4) -- Element 5 (Element 3 (Element 4 Nil 4) 4) 4
 -- Ex. 2:adicionaElemento 4 (Element 5 Nil 4) -- Element 5 (Element 4 Nil 4) 4
+
+pop :: Fila t -> Failable (t, Fila t)
+pop Nil = Fail "Fila vazia"
+pop (Element elemento fila capacidade) = Works (elemento, fila)
+
+-- Ex. 1: pop Nil -- Fail "Fila vazia"
+-- Ex. 2: pop (Element 5 Nil 4) -- Works (5,Nil)
+-- Ex. 3: pop (Element 5 (Element 4 Nil 4) 4) -- Works (5,Element 4 Nil 4)
