@@ -7,6 +7,5 @@ instance Monad Failable where
  (>>=) (Fail x) _ = Fail x
  return x = Works x
 
--- ta dando erro ainda
- criarFila :: Int -> t -> Failable (t, Fila t)
- criarFila capacidade primeiroElemento = Works (primeiroElemento, (Element primeiroElemento (Nil)))
+criarFila :: Int -> t -> Failable (t, Fila t)
+criarFila capacidade primeiroElemento = Works (primeiroElemento, (Element primeiroElemento (Nil)))
