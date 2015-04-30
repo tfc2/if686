@@ -8,4 +8,6 @@ instance Monad Failable where
  return x = Works x
 
 criarFila :: Int -> t -> Failable (t, Fila t)
-criarFila capacidade primeiroElemento = Works (primeiroElemento, (Element primeiroElemento (Nil) capacidade))
+criarFila capacidade primeiroElemento
+    | capacidade < 1 = Fail "Capacidade menor que 1"
+    | otherwise = Works (primeiroElemento, (Element primeiroElemento (Nil) capacidade))
