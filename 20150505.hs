@@ -5,33 +5,47 @@ import Data.Char
 
 -- Questao 1 --
 
-data Table = Somente [(Int, Int)] | Nada -- Primeiro int = chave, segundo int = valor
+type Table = [(Int, Int)] -- Primeiro int = chave, segundo int = valor
 
-instance Monad Table where
- (>>=) (Somente x) f = f x
- (>>=) Nada _ = Nada
- return Somente x = Somente x
-
-getElem :: Table -> Int -> Table
-getElem Nothing _ = Nada
+getElem :: Table -> Int -> Maybe [Int]
+getElem [] _ = Nothing
 getElem ((a, as):bs) n
- | a == n = Somente [as]
- | otherwise = Somente getElem bs n
+ | a == n = Just [as]
+ | otherwise = getElem bs n
 
 hasKey :: Table -> Int -> Bool
-hasKey Nothing _ = False
+hasKey [] _ = False
 hasKey ((a, as):bs) n
  | a == n = True
  | otherwise = hasKey bs n
 
-putElem :: Table -> (Int, Int) -> Table
+putElem :: Table -> (Int, Int) -> Maybe Table
 putElem as (x, y) 
- | hasKey as x = Somente as -- Nao adiciona se ja existir a chave
- | otherwise = Somente (as ++ [(x,y)])
+ | hasKey as x = Just as -- Nao adiciona se ja existir a chave
+ | otherwise = Just (as ++ [(x,y)])
 
-removeElem :: Table -> Int -> Table -- int = chave
-removeElem Nothing _ = Nada
-removeElem xs x = Somente [(a, as) | (a, as) <- xs, (a /= x)]
+removeElem :: Table -> Int -> Maybe Table -- int = chave
+removeElem [] _ = Nothing
+removeElem xs x = Just [(a, as) | (a, as) <- xs, (a /= x)]
+
+exemplo = do
+	{
+		a <- putElem [(1, 3),(2, 4), (5, 7)] (6,8); -- incluindo elemento 1
+		b <- putElem a (9,11); -- incluindo elemento 2
+		c <- removeElem b 1; -- remoção
+		d <- putElem c (10,12); -- incluindo elemento 3
+		e <- putElem d (13,15); -- incluindo elemento 4
+		f <- removeElem e 2; -- remoção
+		g <- putElem f (14,16); -- incluindo elemento 5
+		h <- putElem g (17,19); -- incluindo elemento 6
+		i <- removeElem h 5; -- remoção
+		j <- putElem i (18,20); -- incluindo elemento 7
+		k <- putElem j (21,23); -- incluindo elemento 8
+		l <- removeElem k 6; -- remoção
+		m <- putElem l (22,24); -- incluindo elemento 9
+		n <- putElem m (25,27); -- incluindo elemento 10
+		removeElem n 9; -- remoção
+	}
 
 -- Questao 2 --
 
