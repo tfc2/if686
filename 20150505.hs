@@ -1,4 +1,4 @@
---- Trabalho 11 ---
+---- Trabalho 11 ----
 
 import Control.Monad
 import Data.Char
