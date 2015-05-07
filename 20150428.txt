@@ -117,7 +117,7 @@ o = i -> [e]
 igualando o o:
 l = i
 m = [e]
-map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) :: Num m => (i -> [[e]]) -> [i] -> [[e]]
+map.((.) (foldr (++) (foldr (++) [] [[1], [2]]))) :: Num e => (i -> [[e]]) -> [i] -> [[e]]
 
 ——
 
