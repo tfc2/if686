@@ -122,7 +122,8 @@ environment =
           $ insert "list?"          (Native predList)
           $ insert "+"              (Native numericSum) 
           $ insert "*"              (Native numericMult) 
-          $ insert "/"              (Native numericDiv) 
+          $ insert "/"              (Native numericDiv) -- divisao inteira entre numeros 
+          $ insert "mod"            (Native numericMod) -- resto da divisao inteira
           $ insert "-"              (Native numericSub) 
           $ insert "car"            (Native car)           
           $ insert "cdr"            (Native cdr)           
@@ -190,6 +191,10 @@ numericMult l = numericBinOp (*) l
 numericDiv :: [LispVal] -> LispVal -- divisao inteira
 numericDiv [] = Number 0
 numericDiv l = numericBinOp (div) l
+
+numericMod :: [LispVal] -> LispVal -- resto da divisao inteira
+numericMod [] = Number 0
+numericMod l = numericBinOp (mod) l
 
 numericSub :: [LispVal] -> LispVal
 numericSub [] = Error "wrong number of arguments."
