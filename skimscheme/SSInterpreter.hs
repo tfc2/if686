@@ -29,6 +29,7 @@ Last update: December 17th 2012
 -}
 
 module Main where
+import Control.Applicative hiding (empty)
 import System.Environment
 import Control.Monad
 import Data.Map as Map
@@ -146,7 +147,14 @@ instance Monad StateTransformer where
                                  (ST resF) = f v
                              in  resF newS
                       )
-    
+
+instance Functor StateTransformer where
+    fmap = liftM
+
+instance Applicative StateTransformer where
+    pure = return
+    (<*>) = ap
+
 -----------------------------------------------------------
 --          HARDWIRED PREDEFINED LISP FUNCTIONS          --
 -----------------------------------------------------------

@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 module SSParser(readExpr) where
 import LispVal
 import Text.ParserCombinators.Parsec hiding ( spaces )
