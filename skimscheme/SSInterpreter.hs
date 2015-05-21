@@ -122,6 +122,7 @@ environment =
           $ insert "list?"          (Native predList)
           $ insert "+"              (Native numericSum) 
           $ insert "*"              (Native numericMult) 
+          $ insert "lt?"            (Native boolLt) -- less than 
           $ insert "/"              (Native numericDiv) -- divisao inteira entre numeros 
           $ insert "mod"            (Native numericMod) -- resto da divisao inteira
           $ insert "-"              (Native numericSub) 
@@ -187,6 +188,12 @@ numericSum l = numericBinOp (+) l
 numericMult :: [LispVal] -> LispVal
 numericMult [] = Number 1
 numericMult l = numericBinOp (*) l
+
+boolLt :: [LispVal] -> LispVal -- less than
+boolLt [(Number num1), (Number num2)]
+    | num1 >= num2 = Bool False
+  | otherwise = Bool True
+boolLt _ = Error "wrong parameter."
 
 numericDiv :: [LispVal] -> LispVal -- divisao inteira
 numericDiv [] = Number 0
