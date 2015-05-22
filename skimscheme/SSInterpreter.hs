@@ -184,6 +184,15 @@ predBoolean :: [LispVal] -> LispVal
 predBoolean (Bool _ : []) = Bool True
 predBoolean (a:[]) = Bool False
 predBoolean ls = Error "wrong number of arguments."
+{--
+runhaskell SSInterpreter.hs "(define x (lt? 20 2))"
+#f
+[("x",#f)]
+
+runhaskell SSInterpreter.hs "(define x (lt? 2 20))"
+#t
+[("x",#t)]
+--}
 
 predList :: [LispVal] -> LispVal
 predList (List _ : []) = Bool True
@@ -200,21 +209,43 @@ numericMult l = numericBinOp (*) l
 
 cons :: [LispVal] -> LispVal -- analogo ao : do haskell
 cons [a,(List l)] = List (a:l)
+cons [a,(DottedList l b)] = DottedList (a : l) b
 cons _ = Error "wrong parameter."
+{--
+unhaskell SSInterpreter.hs "(define x (cons 2 '(3 4 6 8 10)))"
+(2 3 4 6 8 10)
+[("x",(2 3 4 6 8 10))]
+
+Caso seja uma DottedList:
+
+runhaskell SSInterpreter.hs "(define x (cons 2 '(3 . (4 . (6 . (8 . 10))))))"
+(2 3 . (4 . (6 . (8 . 10))))
+[("x",(2 3 . (4 . (6 . (8 . 10)))))]
+--}
 
 boolLt :: [LispVal] -> LispVal -- less than
 boolLt [(Number num1), (Number num2)]
     | num1 >= num2 = Bool False
-  | otherwise = Bool True
+    | otherwise = Bool True
 boolLt _ = Error "wrong parameter."
 
 numericDiv :: [LispVal] -> LispVal -- divisao inteira
 numericDiv [] = Number 0
 numericDiv l = numericBinOp (div) l
+{--
+runhaskell SSInterpreter.hs "(define x (/ 20 2 5))"
+2
+[("x",2)]
+--}
 
 numericMod :: [LispVal] -> LispVal -- resto da divisao inteira
 numericMod [] = Number 0
 numericMod l = numericBinOp (mod) l
+{--
+runhaskell SSInterpreter.hs "(define x (mod 9 4))"
+1
+[("x",1)]
+--}
 
 numericSub :: [LispVal] -> LispVal
 numericSub [] = Error "wrong number of arguments."
