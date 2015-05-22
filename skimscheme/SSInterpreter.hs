@@ -45,6 +45,27 @@ eval env val@(String _) = return val
 eval env val@(Atom var) = stateLookup env var 
 eval env val@(Number _) = return val
 eval env val@(Bool _) = return val
+eval env (List (Atom "if": exp: thn: els:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else eval env els) ; otherwise -> return (Error "etreer")})
+{--
+runhaskell SSInterpreter "(if #t 'yes 'no)
+yes
+[]
+runhaskell SSInterpreter.hs "(if (#f) 'yes 'no)"
+no
+[]
+runhaskell SSInterpreter.hs "(if (boolean? #t) 'yes 'no)"
+yes
+[]
+runhaskell SSInterpreter.hs "(if (boolean? #f) 'yes 'no)"
+yes
+[]
+runhaskell SSInterpreter.hs "(if #t 2 3)"
+2
+[]
+runhaskell SSInterpreter.hs "(if #f 2 3)"
+3
+[]
+--}
 eval env (List [Atom "quote", val]) = return val
 eval env (List (Atom "begin":[v])) = eval env v
 eval env (List (Atom "begin": l: ls)) = (eval env l) >>= (\v -> case v of { (error@(Error _)) -> return error; otherwise -> eval env (List (Atom "begin": ls))})
