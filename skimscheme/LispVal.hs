@@ -1,4 +1,4 @@
-module LispVal (LispVal(Atom, List, DottedList, Number, String, Bool, Error, Native)) where
+module LispVal (LispVal(Atom, List, DottedList, Number, String, Bool, Error, Native, Comment)) where
 
 
 -----------------------------------------------------------
