@@ -157,6 +157,7 @@ environment =
           $ insert "lt?"            (Native boolLt) -- less than 
           $ insert "/"              (Native numericDiv) -- divisao inteira entre numeros 
           $ insert "mod"            (Native numericMod) -- resto da divisao inteira
+          $ insert "eqv?"           (Native compareValue) -- comparacao entre valores 
           $ insert "-"              (Native numericSub) 
           $ insert "car"            (Native car)           
           $ insert "cdr"            (Native cdr)           
@@ -276,6 +277,24 @@ runhaskell SSInterpreter.hs "(define x (mod 9 4))"
 1
 [("x",1)]
 --}
+
+compareValue :: [LispVal] -> LispVal
+compareValue [Bool a, Bool b] = (Bool (a == b))
+compareValue [Number a, Number b] = (Bool (a == b))
+compareValue [String a, String b] = (Bool (a == b))
+compareValue [List a, List b] = (Bool (eqList a b))
+compareValue [DottedList a b, DottedList c d] = (Bool (eqDotted a b c d))
+
+compareValue [_, _] = (Bool False) -- tipos diferentes
+
+{-
+runhaskell SSInterpreter.hs "(define x (eqv? (* 2 2) (/ 16 4)))"
+runhaskell SSInterpreter.hs "(define x (eqv? #t #f))"
+runhaskell SSInterpreter.hs "(define x (eqv? \"plc\" \"plc\"))"
+runhaskell SSInterpreter.hs "(define x (eqv? (cons 2 '(3 4 5)) (cons 2 '(3 4 5))))"
+runhaskell SSInterpreter.hs "(define x (eqv? '(1 . 2) '(1 . 3)))"
+runhaskell SSInterpreter.hs "(define x (eqv? 1 #t))"
+-}
 
 numericSub :: [LispVal] -> LispVal
 numericSub [] = Error "wrong number of arguments."
