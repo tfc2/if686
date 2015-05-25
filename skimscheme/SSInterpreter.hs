@@ -66,6 +66,16 @@ runhaskell SSInterpreter.hs "(if #f 2 3)"
 3
 []
 --}
+eval env (List (Atom "set!": (Atom var): exp: [])) = stateLookup env var >>= (\v -> case v  of { (error@(Error _)) -> return error; otherwise -> defineVar env var exp})
+{--
+runhaskell SSInterpreter.hs "(begin (define x 2) (set! x 4))"
+4
+[("x",4)]
+
+runhaskell SSInterpreter.hs "(set! x 4)"
+variable does not exist.
+[]
+--}
 eval env (List (Atom "comment": _)) = return (Comment)
 {-
 runhaskell SSInterpreter.hs "(comment Projeto de PLC)"
@@ -241,7 +251,7 @@ numericMult l = numericBinOp (*) l
 cons :: [LispVal] -> LispVal -- analogo ao : do haskell
 cons [a,(List l)] = List (a:l)
 cons [a,(DottedList l b)] = DottedList (a : l) b
-cons _ = Error "wrong parameter."
+cons _ = Error "wrong arguments."
 {--
 unhaskell SSInterpreter.hs "(define x (cons 2 '(3 4 6 8 10)))"
 (2 3 4 6 8 10)
@@ -258,7 +268,7 @@ boolLt :: [LispVal] -> LispVal -- less than
 boolLt [(Number num1), (Number num2)]
     | num1 >= num2 = Bool False
     | otherwise = Bool True
-boolLt _ = Error "wrong parameter."
+boolLt _ = Error "wrong arguments."
 
 numericDiv :: [LispVal] -> LispVal -- divisao inteira
 numericDiv [] = Number 0
