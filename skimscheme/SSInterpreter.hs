@@ -66,6 +66,15 @@ runhaskell SSInterpreter.hs "(if #f 2 3)"
 3
 []
 --}
+eval env (List (Atom "comment": _)) = return (Comment)
+{-
+runhaskell SSInterpreter.hs "(comment Projeto de PLC)"
+[]
+runhaskell SSInterpreter.hs "(comment)"
+[]
+runhaskell SSInterpreter.hs "(comment 1 2 3 4 \"isto eh um comentario\")"
+[]
+-}
 eval env (List [Atom "quote", val]) = return val
 eval env (List (Atom "begin":[v])) = eval env v
 eval env (List (Atom "begin": l: ls)) = (eval env l) >>= (\v -> case v of { (error@(Error _)) -> return error; otherwise -> eval env (List (Atom "begin": ls))})
