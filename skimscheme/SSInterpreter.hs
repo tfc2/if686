@@ -296,6 +296,21 @@ runhaskell SSInterpreter.hs "(define x (eqv? '(1 . 2) '(1 . 3)))"
 runhaskell SSInterpreter.hs "(define x (eqv? 1 #t))"
 -}
 
+eqList :: [LispVal] -> [LispVal] -> Bool
+eqList [] [] = True
+eqList [] _ = False
+eqList _ [] = False
+eqList (a:as) (b:bs)
+ | resp = eqList as bs
+ | otherwise = False
+ where Bool resp = (compareValue [a, b])
+
+eqDotted :: [LispVal] -> LispVal -> [LispVal] -> LispVal -> Bool
+eqDotted a b c d
+ | (eqList a c) && resp = True
+ | otherwise = False
+ where Bool resp = (compareValue [b, d])
+
 numericSub :: [LispVal] -> LispVal
 numericSub [] = Error "wrong number of arguments."
 -- The following case handles negative number literals.
