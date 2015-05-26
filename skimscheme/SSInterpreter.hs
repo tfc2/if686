@@ -253,7 +253,7 @@ cons [a,(List l)] = List (a:l)
 cons [a,(DottedList l b)] = DottedList (a : l) b
 cons _ = Error "wrong arguments."
 {--
-unhaskell SSInterpreter.hs "(define x (cons 2 '(3 4 6 8 10)))"
+runhaskell SSInterpreter.hs "(define x (cons 2 '(3 4 6 8 10)))"
 (2 3 4 6 8 10)
 [("x",(2 3 4 6 8 10))]
 
