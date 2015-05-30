@@ -151,10 +151,11 @@ apply env func args =
                       otherwise -> 
                         (stateLookup env func >>= \res -> 
                           case res of 
-                            List (Atom "lambda" : List formals : body:l) -> lambda env formals body args                              
+                            (Closure (List (Atom "lambda" : List formals : body:l)) env2) -> lambda env2 formals body args                        
+                            List (Atom "lambda" : List formals : body:l) -> lambda env formals body args       
                             otherwise -> return (Error $ func ++ " not a function.")
                         )
- 
+                                 
 -- The lambda function is an auxiliary function responsible for
 -- applying user-defined functions, instead of native ones. We use a very stupid 
 -- kind of dynamic variable (parameter) scoping that does not even support
