@@ -94,6 +94,8 @@ eval env lam@(List (List (Atom "lambda":(List formals):body:[]):args)) = mapM (e
 eval env (List (Atom "let":bindings:body:[])) = (flet env (separa bindings) body)
 -- runhaskell SSInterpreter.hs "(begin (define x 10) (let ((x 5) (y (* x 2))) (+ x y)))""
 
+eval env (List (Atom "make-closure":lambda:[])) = return (Closure lambda env)
+
 -- The following line is slightly more complex because we are addressing the
 -- case where define is redefined by the user (whatever is the user's reason
 -- for doing so. The problem is that redefining define does not have

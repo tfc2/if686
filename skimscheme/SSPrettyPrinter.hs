@@ -18,6 +18,7 @@ instance Show LispVal where
   show (Native p) = "<native procedure>"
   show (Error s) = s
   show (Comment) = ""
+  show (Closure lambda env) = (show lambda) ++ "environment:" ++ show env
   
 -- This function could be replaced by (unwords.map show). The unwords
 -- function takes a list of String values and uses them to build a 
