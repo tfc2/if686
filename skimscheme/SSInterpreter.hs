@@ -195,6 +195,8 @@ type StateT = Map String LispVal
 -- state (a modification of the previous one). 
 data StateTransformer t = ST (StateT -> (t, StateT))
 
+data Closure = [(lambda, environment)]
+
 instance Monad StateTransformer where
   return x = ST (\s -> (x, s))
   (>>=) (ST m) f = ST (\s -> let (v, newS) = m s
@@ -237,15 +239,6 @@ predBoolean :: [LispVal] -> LispVal
 predBoolean (Bool _ : []) = Bool True
 predBoolean (a:[]) = Bool False
 predBoolean ls = Error "wrong number of arguments."
-{--
-runhaskell SSInterpreter.hs "(define x (lt? 20 2))"
-#f
-[("x",#f)]
-
-runhaskell SSInterpreter.hs "(define x (lt? 2 20))"
-#t
-[("x",#t)]
---}
 
 predList :: [LispVal] -> LispVal
 predList (List _ : []) = Bool True
@@ -281,6 +274,15 @@ boolLt [(Number num1), (Number num2)]
     | num1 >= num2 = Bool False
     | otherwise = Bool True
 boolLt _ = Error "wrong arguments."
+{--
+runhaskell SSInterpreter.hs "(define x (lt? 20 2))"
+#f
+[("x",#f)]
+
+runhaskell SSInterpreter.hs "(define x (lt? 2 20))"
+#t
+[("x",#t)]
+--}
 
 numericDiv :: [LispVal] -> LispVal -- divisao inteira
 numericDiv [] = Number 0
