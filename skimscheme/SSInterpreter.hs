@@ -195,8 +195,6 @@ type StateT = Map String LispVal
 -- state (a modification of the previous one). 
 data StateTransformer t = ST (StateT -> (t, StateT))
 
-data Closure = [(lambda, environment)]
-
 instance Monad StateTransformer where
   return x = ST (\s -> (x, s))
   (>>=) (ST m) f = ST (\s -> let (v, newS) = m s
