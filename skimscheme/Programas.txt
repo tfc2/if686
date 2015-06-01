@@ -28,3 +28,59 @@ runhaskell SSInterpreter.hs "(begin (define fib (lambda (n) (if (eqv? n 0) 0 (if
 3
 [("fib",lambda ((n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n
  2)))))))]
+
+2. Divisível por 6
+
+1.1 Estrutura:
+
+(begin
+    (let ((a 1))
+        (define divisivel2
+            (make-closure
+                (lambda (x)
+                    (begin (set! a (mod x 2)))
+                )
+            )
+        )
+    )
+    (let ((b 1))
+        (define divisivel3
+            (make-closure
+                (lambda (y)
+                    (begin (set! b (mod y 3)))
+                )
+            )
+        )
+    )
+    (define divisivel6
+        (lambda (z)
+            (if ( eqv? (divisivel2 z) 0 )
+                (if ( eqv? (divisivel3 z) 0 ) #t #f )
+            #f)
+         )
+    )
+    (divisivel6 24)
+)
+
+2.2 Teste
+
+runhaskell SSInterpreter.hs "(begin (let ((a 1)) (define divisivel2 (make-closure (lambda (x) (begin (set! a (mod x 2))) ) ) ) ) (let ((b 1)) (define divisivel3 (make-closure (lambda (y) (begin (set! b (mod y 3))) ) ) ) ) (define divisivel6 (lambda (z) (if ( eqv? (divisivel2 z) 0 ) (if ( eqv? (divisivel3 z) 0 ) #t #f ) #f) ) ) (divisivel6 24) )"
+
+2.3 Saída:
+
+#t
+[("a",0),("b",0),("divisivel2",lambda ((x) (begin (set! a (mod x 2)))) environme
+nt: fromList [("*",<native procedure>),("+",<native procedure>),("-",<native pro
+cedure>),("/",<native procedure>),("a",1),("boolean?",<native procedure>),("car"
+,<native procedure>),("cdr",<native procedure>),("cons",<native procedure>),("eq
+v?",<native procedure>),("list?",<native procedure>),("lt?",<native procedure>),
+("mod",<native procedure>),("number?",<native procedure>)]),("divisivel3",lambda
+ ((y) (begin (set! b (mod y 3)))) environment: fromList [("*",<native procedure>
+),("+",<native procedure>),("-",<native procedure>),("/",<native procedure>),("b
+",1),("boolean?",<native procedure>),("car",<native procedure>),("cdr",<native p
+rocedure>),("cons",<native procedure>),("eqv?",<native procedure>),("list?",<nat
+ive procedure>),("lt?",<native procedure>),("mod",<native procedure>),("number?"
+,<native procedure>)]),("divisivel6",lambda ((z) (if (eqv? (divisivel2 z) 0) (if
+ (eqv? (divisivel3 z) 0) #t #f) #f)))]
+ 
+ Obs.: substituindo 24 por 23, por exemplo, a saída retorna #f.
