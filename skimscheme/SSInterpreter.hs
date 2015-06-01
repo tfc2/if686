@@ -95,6 +95,7 @@ eval env (List (Atom "let":bindings:body:[])) = (flet env (separa bindings) body
 -- runhaskell SSInterpreter.hs "(begin (define x 10) (let ((x 5) (y (* x 2))) (+ x y)))""
 
 eval env (List (Atom "make-closure":lambda:[])) = return (Closure lambda env)
+-- runhaskell SSInterpreter.hs "(begin (let ((i 1)) (define f (make-closure (lambda (y) (begin (set! i (+ i y))) )) )) (define val1 (f 1)) (define val2 (f 2)) (+ val1 val2) )"
 
 -- The following line is slightly more complex because we are addressing the
 -- case where define is redefined by the user (whatever is the user's reason
@@ -155,7 +156,6 @@ apply env func args =
                             List (Atom "lambda" : List formals : body:l) -> lambda env formals body args       
                             otherwise -> return (Error $ func ++ " not a function.")
                         )
-                                 
 -- The lambda function is an auxiliary function responsible for
 -- applying user-defined functions, instead of native ones. We use a very stupid 
 -- kind of dynamic variable (parameter) scoping that does not even support
