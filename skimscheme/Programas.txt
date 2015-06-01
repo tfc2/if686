@@ -2,9 +2,9 @@
 programas corretos e que testem todas as funcionalidades implementadas
 pelo interpretador. Esses testes devem incluir situações onde várias
 funcionalidades são combinadas. Os programas desenvolvidos devem estar
-disponíveis no momento da apresentação do projeto. Pelo menos um desses
-programas deve implementar o algoritmo Quicksort recursivamente e
-pelo menos dois devem usar clausuras léxicas”
+disponíveis no momento da apresentação do projeto.
+Pelo menos um desses programas deve implementar o algoritmo Quicksort
+recursivamente e pelo menos dois devem usar clausuras léxicas”
 
 1. Fibonacci
 
@@ -16,9 +16,15 @@ pelo menos dois devem usar clausuras léxicas”
             (if ( eqv? n 0) 0
             (if ( eqv? n 1) 1
             (+ (fib (- n 1)) (fib (- n 2)))))))
-    (define x (fib (5)))
+    (fib 4)
 )
 
 1.2 Teste
 
-runhaskell SSInterpreter.hs "(begin (define fib (lambda (n) (if ( eqv? n 0) 0 (if ( eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n 2))))))) (define x (fib (5))) )"
+runhaskell SSInterpreter.hs "(begin (define fib (lambda (n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n 2))))))) (fib 4) )"
+
+1.3 Saída:
+
+3
+[("fib",lambda ((n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n
+ 2)))))))]
