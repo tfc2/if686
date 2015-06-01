@@ -19,19 +19,20 @@ recursivamente e pelo menos dois devem usar clausuras léxicas”
     (fib 4)
 )
 
-1.2 Teste
+1.2 Teste:
 
 runhaskell SSInterpreter.hs "(begin (define fib (lambda (n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n 2))))))) (fib 4) )"
 
 1.3 Saída:
 
 3
-[("fib",lambda ((n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n
- 2)))))))]
+[("fib",lambda ((n) (if (eqv? n 0) 0 (if (eqv? n 1) 1 (+ (fib (- n 1)) (fib (- n 2)))))))]
+
+
 
 2. Divisível por 6
 
-1.1 Estrutura:
+2.1 Estrutura:
 
 (begin
     (let ((a 1))
@@ -62,7 +63,7 @@ runhaskell SSInterpreter.hs "(begin (define fib (lambda (n) (if (eqv? n 0) 0 (if
     (divisivel6 24)
 )
 
-2.2 Teste
+2.2 Teste:
 
 runhaskell SSInterpreter.hs "(begin (let ((a 1)) (define divisivel2 (make-closure (lambda (x) (begin (set! a (mod x 2))) ) ) ) ) (let ((b 1)) (define divisivel3 (make-closure (lambda (y) (begin (set! b (mod y 3))) ) ) ) ) (define divisivel6 (lambda (z) (if ( eqv? (divisivel2 z) 0 ) (if ( eqv? (divisivel3 z) 0 ) #t #f ) #f) ) ) (divisivel6 24) )"
 
@@ -84,3 +85,28 @@ ive procedure>),("lt?",<native procedure>),("mod",<native procedure>),("number?"
  (eqv? (divisivel3 z) 0) #t #f) #f)))]
  
  Obs.: substituindo 24 por 23, por exemplo, a saída retorna #f.
+
+
+
+3. Inclui número maior que 5 em uma lista
+
+3.1 Estrutura:
+
+(begin
+    (define maior5
+        (lambda (n)
+            (if (lt? 5 n) (cons n '(7 8 9 10)) '(7 8 9 10) )
+        )
+    )
+    (maior5 6)
+)
+
+3.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define maior5 (lambda (n) (if (lt? 5 n) (cons n '(7 8 9 10)) '(7 8 9 10) ) ) ) (maior5 6) )"
+
+3.3 Saída:
+(6 7 8 9 10)
+[("maior5",lambda ((n) (if (lt? 5 n) (cons n (quote (7 8 9 10))) (quote (7 8 9 10)))))]
+
+Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem incluir o número 3.
