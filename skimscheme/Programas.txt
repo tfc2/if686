@@ -1,0 +1,18 @@
+“Além do interpretador, a equipe deve construir pelo menos dez
+programas corretos e que testem todas as funcionalidades implementadas
+pelo interpretador. Esses testes devem incluir situações onde várias
+funcionalidades são combinadas. Os programas desenvolvidos devem estar
+disponíveis no momento da apresentação do projeto. Pelo menos um
+desses programas deve implementar o algoritmo Quicksort
+recursivamente e pelo menos dois devem usar clausuras léxicas”
+
+1. Fibonacci
+
+(begin
+    (define fib 
+        (lambda (n)
+            (if ( eqv? n 0) 0 (comment caso base 0)
+            (if ( eqv? n 1) 1 (comment caso base 1)
+            (+ (fib (- n 1)) (fib (- n 2)))))))
+    (define x (fib5))
+)
