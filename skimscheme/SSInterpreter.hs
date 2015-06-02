@@ -79,10 +79,13 @@ variable does not exist.
 eval env (List (Atom "comment": _)) = return $ List []
 {-
 runhaskell SSInterpreter.hs "(comment Projeto de PLC)"
+()
 []
 runhaskell SSInterpreter.hs "(comment)"
+()
 []
 runhaskell SSInterpreter.hs "(comment 1 2 3 4 \"isto eh um comentario\")"
+()
 []
 -}
 eval env (List [Atom "quote", val]) = return val
