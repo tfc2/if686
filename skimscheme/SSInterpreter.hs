@@ -119,7 +119,7 @@ stateLookup :: StateT -> String -> StateTransformer LispVal
 stateLookup env var = ST $ 
   (\s -> 
     (maybe (Error "variable does not exist.") 
-           id (Map.lookup var (union env s) 
+           id (Map.lookup var (union env s)  -- recursão
     ), s))
 
 
