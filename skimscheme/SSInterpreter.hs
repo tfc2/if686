@@ -48,10 +48,10 @@ eval env val@(Bool _) = return val
 eval env (List (Atom "if": exp: thn: els:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else eval env els) ; otherwise -> return (Error "etreer")})
 eval env (List (Atom "if": exp: thn:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else return $ List []) ; otherwise -> return (Error "etreer")})
 {--
-runhaskell SSInterpreter.hs "(if #t 'yes 'no)
+runhaskell SSInterpreter.hs "(if #t 'yes 'no)"
 yes
 []
-runhaskell SSInterpreter.hs "(if (#f) 'yes 'no)"
+runhaskell SSInterpreter.hs "(if #f 'yes 'no)"
 no
 []
 runhaskell SSInterpreter.hs "(if (boolean? #t) 'yes 'no)"
