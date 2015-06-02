@@ -76,16 +76,13 @@ runhaskell SSInterpreter.hs "(set! x 4)"
 variable does not exist.
 []
 --}
-eval env (List (Atom "comment": _)) = return $ List []
+eval env (List (Atom "comment": _)) = return Comment
 {-
 runhaskell SSInterpreter.hs "(comment Projeto de PLC)"
-()
 []
 runhaskell SSInterpreter.hs "(comment)"
-()
 []
 runhaskell SSInterpreter.hs "(comment 1 2 3 4 \"isto eh um comentario\")"
-()
 []
 -}
 eval env (List [Atom "quote", val]) = return val
