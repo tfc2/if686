@@ -60,7 +60,7 @@ yes
 runhaskell SSInterpreter.hs "(if (boolean? #f) 'yes 'no)"
 yes
 []
-runhaskell SSInterpreter.hs "(if #t 2 3)"
+runhaskell SSInterpreter.hs "(if #t 2)"
 2
 []
 runhaskell SSInterpreter.hs "(if #f 2 3)"
