@@ -17,7 +17,6 @@ instance Show LispVal where
   show (DottedList h t) = "(" ++ showListContents h ++ " . " ++ show t ++ ")"  
   show (Native p) = "<native procedure>"
   show (Error s) = s
-  show (Comment) = ""
   show (Closure lambda env) = (show lambda) ++ " environment: " ++ show env
   
 -- This function could be replaced by (unwords.map show). The unwords
