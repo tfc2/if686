@@ -112,3 +112,31 @@ runhaskell SSInterpreter.hs "(begin (define maior5 (lambda (n) (if (lt? 5 n) (co
 [("maior5",lambda ((n) (if (lt? 5 n) (cons n (quote (7 8 9 10))) (quote (7 8 9 10)))))]
 
 Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem incluir o número 3.
+
+4. Divide por dois
+
+4.1 Estrutura:
+
+(begin
+    (define x 10)
+    (comment exemplo com variavel local e recursao)
+    (define f
+        (lambda (x)
+            (/ x 2)
+        )
+    )
+    (comment a funcao abaixo deve retornar 4 e nao 5)
+    (f 8)
+)
+
+4.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define x 10) (comment exemplo com variavel local e recursao) (define f (lambda (x) (/ x 2))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
+
+4.3 Saída:
+
+C:\Users\tfc2\Downloads\if686-master\skimscheme>runhaskell SSInterpreter.hs "(be
+gin (define x 10) (comment exemplo com variavel local e recursao) (define f (lam
+bda (x) (/ x 2))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
+4
+[("f",lambda ((x) (/ x 2))),("x",10)]
