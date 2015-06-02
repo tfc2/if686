@@ -119,7 +119,7 @@ Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem inc
 
 (begin
     (define x 10)
-    (comment exemplo com variavel local e recursao)
+    (comment exemplo com variavel local e lambda)
     (define f
         (lambda (x)
             (/ x 2)
