@@ -88,7 +88,19 @@ runhaskell SSInterpreter.hs "(comment 1 2 3 4 \"isto eh um comentario\")"
 -}
 eval env (List [Atom "quote", val]) = return val
 eval env (List (Atom "begin":[v])) = eval env v
-eval env (List (Atom "begin": l: ls)) = (eval env l) >>= (\v -> case v of { (error@(Error _)) -> return error; otherwise -> eval env (List (Atom "begin": ls))})
+eval env (List (Atom "begin": l: ls)) = ST $ -- correcao do begin
+    (\s ->
+        let (ST f) = eval env l
+            (result, newState) = f s
+        in case result of
+            error@(Error _) -> (error, newState)
+            otherwise ->
+                let (ST f2) = eval (union newState env) (List (Atom "begin" : ls))
+                    (result2, newState2) = f2 newState
+                in (result2, union newState2 newState)
+    )
+	
+
 eval env (List (Atom "begin":[])) = return (List [])
 eval env lam@(List (Atom "lambda":(List formals):body:[])) = return lam
 eval env lam@(List (List (Atom "lambda":(List formals):body:[]):args)) = mapM (eval env) args >>= (lambda env formals body)
@@ -120,7 +132,7 @@ stateLookup :: StateT -> String -> StateTransformer LispVal
 stateLookup env var = ST $ 
   (\s -> 
     (maybe (Error "variable does not exist.") 
-           id (Map.lookup var (union env s)  -- recursão
+           id (Map.lookup var (union env s)
     ), s))
 
 
