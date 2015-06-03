@@ -179,12 +179,13 @@ environment =
           $ insert "list?"          (Native predList)
           $ insert "+"              (Native numericSum) 
           $ insert "*"              (Native numericMult) 
+          $ insert "append"         (Native append) -- analogo ao ++ de haskell 
           $ insert "cons"           (Native cons) -- analogo ao : de haskell 
           $ insert "lt?"            (Native boolLt) -- less than 
           $ insert "/"              (Native numericDiv) -- divisao inteira entre numeros 
           $ insert "mod"            (Native numericMod) -- resto da divisao inteira
           $ insert "eqv?"           (Native compareValue) -- comparacao entre valores 
-          $ insert "-"              (Native numericSub) 
+          $ insert "-"              (Native numericSub)
           $ insert "car"            (Native car)           
           $ insert "cdr"            (Native cdr)           
             empty
@@ -254,6 +255,10 @@ numericSum l = numericBinOp (+) l
 numericMult :: [LispVal] -> LispVal
 numericMult [] = Number 1
 numericMult l = numericBinOp (*) l
+
+append :: [LispVal] -> LispVal -- analogo ao ++ do haskell
+append [(List l1), (List l2)] = List (l1++l2)
+append _ = Error "wrong arguments."
 
 cons :: [LispVal] -> LispVal -- analogo ao : do haskell
 cons [a,(List l)] = List (a:l)
