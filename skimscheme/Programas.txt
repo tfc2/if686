@@ -199,7 +199,7 @@ dr l1)))))),("quicksort",lambda ((l1) (if (eqv? l1 (quote ())) (quote ()) (let (
  
 6. MDC
 
-5.1 Estrutura:
+6.1 Estrutura:
 
 (begin
 	(define mdc
@@ -228,3 +228,32 @@ runhaskell SSInterpreter.hs "(begin (define mdc (lambda (a b) (if (eqv? a 0) b (
 6
 [("mdc",lambda ((a b) (if (eqv? a 0) b (if (eqv? b 0) a (if (lt? b a) (mdc (- a b) b) (mdc a (- b a)))))))]
 
+
+
+7. Potências
+
+7.1 Estrutura:
+
+(begin
+	(define pow
+		(lambda (a b)
+			(if (eqv? b 0)
+				1
+				(if (eqv? b 1)
+					a
+					(* a (pow a (- b 1)))
+				)
+			)
+		)
+	)
+	(pow 2 5)
+)
+
+7.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define pow (lambda (a b) (if (eqv? b 0) 1 (if (eqv? b 1) a (* a (pow a (- b 1))) ) ) ) ) (pow 2 5) )"
+
+7.3 Saída:
+
+32
+[("pow",lambda ((a b) (if (eqv? b 0) 1 (if (eqv? b 1) a (* a (pow a (- b 1)))))))]
