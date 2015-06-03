@@ -227,3 +227,4 @@ runhaskell SSInterpreter.hs "(begin (define mdc (lambda (a b) (if (eqv? a 0) b (
 
 6
 [("mdc",lambda ((a b) (if (eqv? a 0) b (if (eqv? b 0) a (if (lt? b a) (mdc (- a b) b) (mdc a (- b a)))))))]
+
