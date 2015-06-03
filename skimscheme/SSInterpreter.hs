@@ -169,6 +169,30 @@ apply env func args =
                             List (Atom "lambda" : List formals : body:l) -> lambda env formals body args       
                             otherwise -> return (Error $ func ++ " not a function.")
                         )
+                        
+{-
+apply :: StateT -> String -> [LispVal] -> StateTransformer LispVal
+apply env func args =  
+                  case (Map.lookup func env) of
+                      Just (Native f)  -> return (f args)
+                      otherwise -> 
+                        (stateLookup env func >>= \res -> 
+                          case res of 
+                            (Closure (List (Atom "lambda" : List formals : body:l)) envClosure) -> ST $ (\s -> let envs = union envClosure env
+								(ST f1) = lambda envs formals body args
+								(result1, env1) = f1 $ union envs s
+								novaClosure = intersection env1 envClosure
+								(ST f2) =
+								(result2, env2) = 
+								novaClosure2 = 
+								in (result1, novaCosure2)
+							)
+                            List (Atom "lambda" : List formals : body:l) -> lambda env formals body args       
+                            otherwise -> return (Error $ func ++ " not a function.")
+                        )
+    )
+-}
+
 -- The lambda function is an auxiliary function responsible for
 -- applying user-defined functions, instead of native ones. We use a very stupid 
 -- kind of dynamic variable (parameter) scoping that does not even support
