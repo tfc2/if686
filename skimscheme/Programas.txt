@@ -230,7 +230,7 @@ runhaskell SSInterpreter.hs "(begin (define mdc (lambda (a b) (if (eqv? a 0) b (
 
 
 
-7. Potências
+7. Potência
 
 7.1 Estrutura:
 
@@ -257,3 +257,34 @@ runhaskell SSInterpreter.hs "(begin (define pow (lambda (a b) (if (eqv? b 0) 1 (
 
 32
 [("pow",lambda ((a b) (if (eqv? b 0) 1 (if (eqv? b 1) a (* a (pow a (- b 1)))))))]
+
+
+
+8. Fatorial
+
+8.1 Estrutura:
+
+(begin
+    (comment funcao fatorial)
+	(define fat
+		(lambda (n)
+			(if (eqv? n 0) 1
+				(* n (fat (- n 1)))
+			)
+		)
+	)
+	(fat 9)
+)
+
+8.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambda (n) (if (eqv? n 0) 1 (* n (fat (- n 1))) ) ) ) (fat 4) )"
+
+8.3 Saída:
+
+24
+[("fat",lambda ((n) (if (eqv? n 0) 1 (* n (fat (- n 1))))))]
+
+
+
+FAZER DUAS FUNCOES COM MAKE-CLOSURE!
