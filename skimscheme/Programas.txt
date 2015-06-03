@@ -194,3 +194,36 @@ dr l1)))))),("quicksort",lambda ((l1) (if (eqv? l1 (quote ())) (quote ()) (let (
 (pivot (car l1))) (append (append (quicksort (partition lambda ((x) (lt? x pivot
 )) l1)) (partition lambda ((x) (eqv? x pivot)) l1)) (quicksort (partition lambda
  ((x) (lt? pivot x)) l1)))))))]
+ 
+ 
+ 
+6. MDC
+
+5.1 Estrutura:
+
+(begin
+	(define mdc
+		(lambda (a b)
+			(if (eqv? a 0)
+				b
+				(if (eqv? b 0)
+					a
+					(if (lt? b a) 
+						(mdc (- a b) b)
+						(mdc a (- b a))
+					)
+				)
+			)
+		)
+	)
+		(mdc 18 24)
+)
+
+6.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define mdc (lambda (a b) (if (eqv? a 0) b (if (eqv? b 0) a (if (lt? b a) (mdc (- a b) b) (mdc a (- b a)) ))))) (mdc 18 24))"
+
+6.3 Saída:
+
+6
+[("mdc",lambda ((a b) (if (eqv? a 0) b (if (eqv? b 0) a (if (lt? b a) (mdc (- a b) b) (mdc a (- b a)))))))]
