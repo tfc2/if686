@@ -113,6 +113,8 @@ runhaskell SSInterpreter.hs "(begin (define maior5 (lambda (n) (if (lt? 5 n) (co
 
 Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem incluir o número 3.
 
+
+
 4. Divide por dois
 
 4.1 Estrutura:
@@ -140,3 +142,56 @@ gin (define x 10) (comment exemplo com variavel local e recursao) (define f (lam
 bda (x) (/ x 2))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
 4
 [("f",lambda ((x) (/ x 2))),("x",10)]
+
+
+
+5. Quicksort
+
+4.1 Estrutura:
+
+(begin
+	(define partition
+		(lambda (compare l1)
+			(if (eqv? l1 '())
+				'()
+			(if (compare (car l1))
+					(cons (car l1) (partition compare (cdr l1)))
+					(partition compare (cdr l1))
+			)))
+		)	
+	(define quicksort
+		(lambda (l1)
+			(if (eqv? l1 '())
+				'()
+				(let 
+					((pivot (car l1)))
+					(append 
+						(append 
+							(quicksort (partition (lambda (x) (lt? x pivot)) l1))
+							(partition (lambda (x) ( eqv? x pivot)) l1)
+						)
+						(quicksort (partition (lambda (x) (lt? pivot x)) l1))
+					)
+				)
+			)
+		)
+	)
+	
+	(quicksort '(9 8 7 6 5 4 3 2 1))
+
+)
+
+
+4.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define partition (lambda (compare l1) (if (eqv? l1 '()) '() (if (compare (car l1)) (cons (car l1) (partition compare (cdr l1))) (partition compare (cdr l1)))))) (define quicksort (lambda (l1) (if (eqv? l1 '()) '() (let ((pivot (car l1))) (append (append (quicksort (partition (lambda (x) (lt? x pivot)) l1)) (partition (lambda (x) ( eqv? x pivot)) l1)) (quicksort (partition (lambda (x) (lt? pivot x)) l1))))))) (quicksort '(15 2 5 11 4 1 12 14 9 8 13 3 6 7 10)))"
+
+4.3 Saída:
+
+(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
+[("partition",lambda ((compare l1) (if (eqv? l1 (quote ())) (quote ()) (if (comp
+are (car l1)) (cons (car l1) (partition compare (cdr l1))) (partition compare (c
+dr l1)))))),("quicksort",lambda ((l1) (if (eqv? l1 (quote ())) (quote ()) (let (
+(pivot (car l1))) (append (append (quicksort (partition lambda ((x) (lt? x pivot
+)) l1)) (partition lambda ((x) (eqv? x pivot)) l1)) (quicksort (partition lambda
+ ((x) (lt? pivot x)) l1)))))))]
