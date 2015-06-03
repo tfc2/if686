@@ -122,11 +122,11 @@ Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem inc
 4.1 Estrutura:
 
 (begin
-    (define x 10)
-    (comment exemplo com variaveis globais e locais)
+    (define x 00)
+    (comment divisao por dois alterando variavel global)
     (define f
         (lambda (x)
-            (/ x 2)
+            (set! x (/ x 2))
         )
     )
     (comment a funcao abaixo deve retornar 4 e nao 5)
@@ -135,15 +135,12 @@ Obs.: substituindo 6 por 3, por exemplo, a saída retorna a lista antiga sem inc
 
 4.2 Teste:
 
-runhaskell SSInterpreter.hs "(begin (define x 10) (comment exemplo com variaveis globais e locais) (define f (lambda (x) (/ x 2))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
+runhaskell SSInterpreter.hs "(begin (define x 0) (comment divisao por dois alterando variavel global) (define f (lambda (x) (set! x (/ x 2)))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
 
 4.3 Saída:
 
-C:\Users\tfc2\Downloads\if686-master\skimscheme>runhaskell SSInterpreter.hs "(be
-gin (define x 10) (comment exemplo com variavel local e recursao) (define f (lam
-bda (x) (/ x 2))) (comment a funcao abaixo deve retornar 4 e nao 5) (f 8))"
 4
-[("f",lambda ((x) (/ x 2))),("x",10)]
+[("f",lambda ((x) (set! x (/ x 2)))),("x",4)]
 
 
 
