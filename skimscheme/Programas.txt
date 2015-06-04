@@ -74,19 +74,30 @@ runhaskell SSInterpreter.hs "(begin (let ((a 1)) (define divisivel2 (make-closur
 2.3 Saída:
 
 #t
-[("a",0),("b",0),("divisivel2",lambda ((x) (begin (set! a (mod x 2)))) environme
-nt: fromList [("*",<native procedure>),("+",<native procedure>),("-",<native pro
-cedure>),("/",<native procedure>),("a",1),("boolean?",<native procedure>),("car"
-,<native procedure>),("cdr",<native procedure>),("cons",<native procedure>),("eq
-v?",<native procedure>),("list?",<native procedure>),("lt?",<native procedure>),
-("mod",<native procedure>),("number?",<native procedure>)]),("divisivel3",lambda
- ((y) (begin (set! b (mod y 3)))) environment: fromList [("*",<native procedure>
-),("+",<native procedure>),("-",<native procedure>),("/",<native procedure>),("b
-",1),("boolean?",<native procedure>),("car",<native procedure>),("cdr",<native p
-rocedure>),("cons",<native procedure>),("eqv?",<native procedure>),("list?",<nat
-ive procedure>),("lt?",<native procedure>),("mod",<native procedure>),("number?"
-,<native procedure>)]),("divisivel6",lambda ((z) (if (eqv? (divisivel2 z) 0) (if
- (eqv? (divisivel3 z) 0) #t #f) #f)))]
+[("*",<native procedure>),("+",<native procedure>),("-",<native procedure>),("/"
+,<native procedure>),("append",<native procedure>),("boolean?",<native procedure
+>),("car",<native procedure>),("cdr",<native procedure>),("cons",<native procedu
+re>),("divisivel2",lambda ((x) (begin (set! a (mod x 2)))) environment: fromList
+ [("*",<native procedure>),("+",<native procedure>),("-",<native procedure>),("/
+",<native procedure>),("a",1),("append",<native procedure>),("boolean?",<native
+procedure>),("car",<native procedure>),("cdr",<native procedure>),("cons",<nativ
+e procedure>),("eqv?",<native procedure>),("list?",<native procedure>),("lt?",<n
+ative procedure>),("mod",<native procedure>),("number?",<native procedure>)]),("
+divisivel3",lambda ((y) (begin (set! b (mod y 3)))) environment: fromList [("*",
+<native procedure>),("+",<native procedure>),("-",<native procedure>),("/",<nati
+ve procedure>),("append",<native procedure>),("b",0),("boolean?",<native procedu
+re>),("car",<native procedure>),("cdr",<native procedure>),("cons",<native proce
+dure>),("divisivel2",lambda ((x) (begin (set! a (mod x 2)))) environment: fromLi
+st [("*",<native procedure>),("+",<native procedure>),("-",<native procedure>),(
+"/",<native procedure>),("a",1),("append",<native procedure>),("boolean?",<nativ
+e procedure>),("car",<native procedure>),("cdr",<native procedure>),("cons",<nat
+ive procedure>),("eqv?",<native procedure>),("list?",<native procedure>),("lt?",
+<native procedure>),("mod",<native procedure>),("number?",<native procedure>)]),
+("eqv?",<native procedure>),("list?",<native procedure>),("lt?",<native procedur
+e>),("mod",<native procedure>),("number?",<native procedure>)]),("divisivel6",la
+mbda ((z) (if (eqv? (divisivel2 z) 0) (if (eqv? (divisivel3 z) 0) #t #f) #f))),(
+"eqv?",<native procedure>),("list?",<native procedure>),("lt?",<native procedure
+>),("mod",<native procedure>),("number?",<native procedure>),("z",24)]
  
  Obs.: substituindo 24 por 23, por exemplo, a saída retorna #f.
 
@@ -286,5 +297,67 @@ runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambd
 [("fat",lambda ((n) (if (eqv? n 0) 1 (* n (fat (- n 1))))))]
 
 
+9. Divisão sucessiva de porcentagem
 
-FAZER DUAS FUNCOES COM MAKE-CLOSURE!
+9.1 Estrutura:
+
+(begin
+  (let ((i 100))
+    (define divisaoSucessiva 
+      (make-closure 
+        (lambda (y) like 
+           (begin (set! i (/ i y)) i) 
+      	 )
+      )
+    )
+   )
+  (define a (divisaoSucessiva 2))
+  (define b (divisaoSucessiva 5))
+  (comment quanto sobra se tirar o valor b de a)
+  (- a b)  
+)
+
+9.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (let ((i 100)) (define divisaoSucessiva (make-closure (lambda (y) like (begin (set! i (/ i y)) i) ) ) ) ) (define a (divisaoSucessiva 2)) (define b (divisaoSucessiva 5)) (comment quanto sobra se tirar o valor b de a) (- a b) )"
+
+9.3 Saída:
+
+40
+[("*",<native procedure>),("+",<native procedure>),("-",<native procedure>),("/"
+,<native procedure>),("a",50),("append",<native procedure>),("b",10),("boolean?"
+,<native procedure>),("car",<native procedure>),("cdr",<native procedure>),("con
+s",<native procedure>),("divisaoSucessiva",lambda ((y) (begin (set! i (/ i y)) i
+)) environment: fromList [("*",<native procedure>),("+",<native procedure>),("-"
+,<native procedure>),("/",<native procedure>),("append",<native procedure>),("bo
+olean?",<native procedure>),("car",<native procedure>),("cdr",<native procedure>
+),("cons",<native procedure>),("eqv?",<native procedure>),("i",10),("list?",<nat
+ive procedure>),("lt?",<native procedure>),("mod",<native procedure>),("number?"
+,<native procedure>)]),("eqv?",<native procedure>),("list?",<native procedure>),
+("lt?",<native procedure>),("mod",<native procedure>),("number?",<native procedu
+re>)]
+
+
+10. Primo
+
+10.1 Estrutura:
+
+(begin
+	(define cont 2)
+    (define primo
+        (lambda (n)
+        	(if (lt? n (* cont cont)) #t 
+        	(if (eqv? (mod n cont) 0) #f (begin (set! cont (+ cont 1)) (primo n) ))
+            )))
+    (primo 17)
+)
+
+10.2 Teste:
+
+runhaskell SSInterpreter.hs "(begin (define cont 2) (define primo (lambda (n) (if (lt? n (* cont cont)) #t (if (eqv? (mod n cont) 0) #f (begin (set! cont (+ cont 1)) (primo n) ))))) (primo 17))"
+
+10.3 Saída:
+
+#t
+[("cont",5),("primo",lambda ((n) (if (lt? n (* cont cont)) #t (if (eqv? (mod n c
+ont) 0) #f (begin (set! cont (+ cont 1)) (primo n))))))]
