@@ -45,8 +45,8 @@ eval env val@(String _) = return val
 eval env val@(Atom var) = stateLookup env var 
 eval env val@(Number _) = return val
 eval env val@(Bool _) = return val
-eval env (List (Atom "if": exp: thn: els:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else eval env els) ; otherwise -> return (Error "etreer")})
-eval env (List (Atom "if": exp: thn:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else return $ List []) ; otherwise -> return (Error "etreer")})
+eval env (List (Atom "if": exp: thn: els:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else eval env els) ; otherwise -> return (Error "Erro ao aplicar a funcao if")})
+eval env (List (Atom "if": exp: thn:[])) = (eval env exp) >>= (\v -> case v of { (error@(Error _)) -> return error; (boolean@(Bool b)) -> (if (b == True) then eval env thn else return $ List []) ; otherwise -> return (Error "Erro ao aplicar a funcao if")})
 {--
 runhaskell SSInterpreter.hs "(if #t 'yes 'no)"
 yes
