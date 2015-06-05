@@ -305,7 +305,7 @@ runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambd
   (let ((i 100))
     (define divisaoSucessiva 
       (make-closure 
-        (lambda (y) like 
+        (lambda (y)
            (begin (set! i (/ i y)) i) 
       	 )
       )
@@ -319,7 +319,7 @@ runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambd
 
 9.2 Teste:
 
-runhaskell SSInterpreter.hs "(begin (let ((i 100)) (define divisaoSucessiva (make-closure (lambda (y) like (begin (set! i (/ i y)) i) ) ) ) ) (define a (divisaoSucessiva 2)) (define b (divisaoSucessiva 5)) (comment quanto sobra se tirar o valor b de a) (- a b) )"
+runhaskell SSInterpreter.hs "(begin (let ((i 100)) (define divisaoSucessiva (make-closure (lambda (y) (begin (set! i (/ i y)) i) ) ) ) ) (define a (divisaoSucessiva 2)) (define b (divisaoSucessiva 5)) (comment quanto sobra se tirar o valor b de a) (- a b) )"
 
 9.3 Saída:
 
