@@ -297,6 +297,7 @@ runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambd
 [("fat",lambda ((n) (if (eqv? n 0) 1 (* n (fat (- n 1))))))]
 
 
+
 9. Divisão sucessiva de porcentagem
 
 9.1 Estrutura:
@@ -319,7 +320,7 @@ runhaskell SSInterpreter.hs "(begin (comment funcao fatorial) (define fat (lambd
 
 9.2 Teste:
 
-runhaskell SSInterpreter.hs "(begin (let ((i 100)) (define divisaoSucessiva (make-closure (lambda (y) (begin (set! i (/ i y)) i) ) ) ) ) (define a (divisaoSucessiva 2)) (define b (divisaoSucessiva 5)) (comment quanto sobra se tirar o valor b de a) (- a b) )"
+runhaskell SSInterpreter.hs "(begin (let ((i 100)) (define divisaoSucessiva (make-closure (lambda (y ) (begin (set! i (/ i y)) i) ) ) ) ) (define a (divisaoSucessiva 2)) (define b (divisaoSucessiva 5)) (comment quanto sobra se tirar o valor b de a) (- a b) )"
 
 9.3 Saída:
 
@@ -336,6 +337,7 @@ ive procedure>),("lt?",<native procedure>),("mod",<native procedure>),("number?"
 ,<native procedure>)]),("eqv?",<native procedure>),("list?",<native procedure>),
 ("lt?",<native procedure>),("mod",<native procedure>),("number?",<native procedu
 re>)]
+
 
 
 10. Primo
