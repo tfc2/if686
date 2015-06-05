@@ -284,7 +284,7 @@ runhaskell SSInterpreter.hs "(begin (define pow (lambda (a b) (if (eqv? b 0) 1 (
 			)
 		)
 	)
-	(fat 9)
+	(fat 4)
 )
 
 8.2 Teste:
