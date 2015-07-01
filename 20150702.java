@@ -37,7 +37,7 @@ public class Banheiro {
 	
 	/*
 	 * Se tiver mulher, o homem não pode entrar, deve esperar. Caso não tenha mulher, o primeiro homem
-	 * da fila irá entrar na lista dos homens que estão dentro do banheiro.
+	 * da fila irá entrar no vetor dos homens que estão dentro do banheiro.
 	 */
 	public synchronized void entrarHomem(){
 		while (this.comMulher){
@@ -63,7 +63,7 @@ public class Banheiro {
 	
 	/*
 	 * Se tiver homem, a mulher não pode entrar, deve esperar. Caso não tenha homem, a primeira mulher
-	 * da fila irá entrar na lista das mulheres que estão dentro do banheiro.
+	 * da fila irá entrar no vetor das mulheres que estão dentro do banheiro.
 	 */
 	public synchronized void entrarMulher(){
 		while (this.comHomem){
@@ -99,7 +99,6 @@ public class Banheiro {
 		for (int i = 0; i < 50; i ++){															
 			threads[i] = (new Thread(t));
 			threads[i].start();	
-
 		}
 		
 		for (int i = 0; i < 50; i ++){
@@ -126,8 +125,8 @@ class MyThread implements Runnable {
 		
 		Random gerador = new Random();	
 		
-		// Cria arbitrariamente 1000 pessoas querendo entrar/sair do banheiro
-		for (int i = 0; i < 1000; i++){
+		// Cria arbitrariamente 100 pessoas querendo entrar/sair do banheiro
+		for (int i = 0; i < 100; i++){
 			
 			boolean quemEntra = gerador.nextBoolean();
 
@@ -135,14 +134,36 @@ class MyThread implements Runnable {
 				banheiro.incrementaHomem();
 				banheiro.filaHomem.add("Homem " + banheiro.contadorHomem); // Cria o homem x na fila de homens
 				banheiro.entrarHomem();
+				try {
+					Thread.sleep(10); // Tempo arbitrário para dar para perceber varios homens no banheiro
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				banheiro.sairHomem();
 			} else {
 				banheiro.incrementaMulher();
 				banheiro.filaMulher.add("Mulher " + banheiro.contadorMulher); // Cria a mulher x na fila de mulheres
 				banheiro.entrarMulher();
+				try {
+					Thread.sleep(10); // Tempo arbitrário para dar para perceber varias mulheres no banheiro
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				banheiro.sairMulher();
 			}
 		}
 	}
 	
 }
+
+
+/*
+ * A questao satisfaz a exclusao mutua pelo fato de que quando um homem ou mulher entra no banheiro, antes verifica
+ * se o banheiro esta ocupado com alguem do sexo oposto atraves do boolean comHomem/comMulher. Se estiver ocupado,
+ * ele ou ela ira esperar atraves do wait() ate que a(as) pessoa(as) notifiquem atraves do notifyAll() que sairam
+ * do banheiro (o vetor de pessoas dentro do banheiro sera vazio).
+ * 
+ * Ha ausencia de starvation porque eh usado o esquema de filas para entrar no banheiro e um vetor para pessoas dentro
+ * do banheiro. Assim, o primeiro homem/mulher que entrou na fila sempre sera privilegiado para entrar/sair do banheiro. 
+ * 
+ * */
