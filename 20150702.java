@@ -57,6 +57,7 @@ public class Banheiro {
 		this.homensDentro.remove(0);
 		if(this.homensDentro.size() == 0){
 			this.comHomem = false;
+			notifyAll();
 		}
 	}
 	
@@ -82,6 +83,7 @@ public class Banheiro {
 		this.mulheresDentro.remove(0);
 		if(this.mulheresDentro.size() == 0){
 			this.comMulher = false;
+			notifyAll();
 		}
 	}
     
