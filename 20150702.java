@@ -55,7 +55,7 @@ public class Banheiro {
 	public synchronized void sairHomem(){
 		System.out.println(this.homensDentro.get(0)+ " saiu");
 		this.homensDentro.remove(0);
-		if(this.homensDentro.size() == 0){
+		if(this.homensDentro.isEmpty()){
 			this.comHomem = false;
 			notifyAll();
 		}
@@ -81,13 +81,12 @@ public class Banheiro {
 	public synchronized void sairMulher(){
 		System.out.println(this.mulheresDentro.get(0)+ " saiu");
 		this.mulheresDentro.remove(0);
-		if(this.mulheresDentro.size() == 0){
+		if(this.mulheresDentro.isEmpty()){
 			this.comMulher = false;
 			notifyAll();
 		}
 	}
     
-	
 	public static void main(String[] args) {
 		
 		Banheiro banheiro = new Banheiro();
@@ -97,10 +96,8 @@ public class Banheiro {
 		
 		MyThread t = new MyThread(banheiro);
 		
-		for (int i = 0; i < 50; i ++){
-																	
-			threads[i] = (new Thread(t)); 
-	
+		for (int i = 0; i < 50; i ++){															
+			threads[i] = (new Thread(t));
 			threads[i].start();	
 
 		}
@@ -146,6 +143,5 @@ class MyThread implements Runnable {
 	}
 	
 	// TODO chamar os metodos de entrar e sair
-	// TODO usar notify() e notifyAll()
 
 }
