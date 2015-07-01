@@ -134,14 +134,15 @@ class MyThread implements Runnable {
 			if(quemEntra){
 				banheiro.incrementaHomem();
 				banheiro.filaHomem.add("Homem " + banheiro.contadorHomem); // Cria o homem x na fila de homens
-			
+				banheiro.entrarHomem();
+				banheiro.sairHomem();
 			} else {
 				banheiro.incrementaMulher();
 				banheiro.filaMulher.add("Mulher " + banheiro.contadorMulher); // Cria a mulher x na fila de mulheres
+				banheiro.entrarMulher();
+				banheiro.sairMulher();
 			}
 		}
 	}
 	
-	// TODO chamar os metodos de entrar e sair
-
 }
